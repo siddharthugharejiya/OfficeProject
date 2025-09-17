@@ -2,14 +2,26 @@ import React, { useState } from 'react'
 import Nav from './Nav'
 import AnimatedImageSlider from './Imageslide'
 import Footer from './Footer'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { Product_Get } from '../Redux/action'
 
 function Home() {
-
+    const dispatch = useDispatch()
 
     const handleclick = (e) => {
         console.log(e);
 
     }
+
+
+    useEffect(() => {
+        dispatch(Product_Get())
+    }, [dispatch])
+
+
+    const Product = useSelector(state => state.Product.Product)
+    // console.log(Product);
 
     return (
         <div>
@@ -46,7 +58,7 @@ function Home() {
                 </div>
             </div> */}
             <AnimatedImageSlider />
-            <div className="py-15 border-b-1 border-b-[#716147]">
+            <div className="py-15 border-b-1 border-b-[#716147] overflow-hidden">
                 <div className="
                 grid 
                 lg:grid-cols-4
@@ -107,201 +119,53 @@ function Home() {
                 </div>
             </div>
 
-            <div className="py-5 mt-10 pb-10 ">
-                <div className='pb-4' data-aos="fade-up" >
-
+            <div className="py-5 mt-10 pb-10 overflow-hidden">
+                <div className='mb-4' data-aos="fade-up" >
                     <div className="flex items-center justify-center space-x-2 font-semibold text-[#BD9C85] text-[14px] uppercase pb-1">
                         <span>01</span>
                         <span className=" h-[1px] w-[20px] bg-[#BD9C85]"></span>
                         <span>Find Your Favorite</span>
                     </div>
-
-                    <p className='text-center text-4xl uppercase font-bold '>shop by category</p>
+                    <h3 className='text-center sm:text-4xl text-xl uppercase font-bold '>shop by category</h3>
                 </div>
                 {/* product */}
                 <div>
-                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 sm:px-30 px-0'>
-                        <div className="card  rounded-md  overflow-hidden transition-all duration-300  group" data-aos="fade-left">
-                            {/* Image */}
-                            <div className="flex justify-center items-center ">
-                                <img
-                                    src="https://cdn.shopify.com/s/files/1/0905/2012/files/s-dcat-6.png?v=1645586327"
-                                    alt="Chairs"
-                                    className="max-w-[200px] transition-transform duration-300"
-                                />
-                            </div>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 sm:px-30 px-0'>
+                        {
+                            Product.map((item) => (
+                                <div className="card  rounded-md  overflow-hidden transition-all duration-300  group" data-aos="fade-left">
+                                    {/* Image */}
+                                    <div className="flex justify-center items-center ">
+                                        <img
+                                            // src="https://cdn.shopify.com/s/files/1/0905/2012/files/s-dcat-6.png?v=1645586327"
+                                            src={item.Image}
+                                            alt="Chairs"
+                                            className="max-w-[200px] transition-transform duration-300"
+                                        />
+                                    </div>
 
-                            {/* Content */}
-                            <div className="relative card-body text-center px-4  h-[68px]">
-                                <h1 className="text-lg font-semibold text-[#2c2c2c]">Chairs</h1>
+                                    {/* Content */}
+                                    <div className="relative card-body text-center px-4  h-[68px]">
+                                        <h1 className="text-lg font-semibold text-[#2c2c2c]">{item.title}</h1>
 
-                                {/* Product Text - Visible initially, hides on hover */}
-                                <p className="text-md text-[#444] mt-1 transition-opacity duration-300 group-hover:opacity-0 absolute left-1/2 -translate-x-1/2">
-                                    <span className="text-[#716147] font-medium">8</span> Product
-                                </p>
+                                        {/* Product Text - Visible initially, hides on hover */}
+                                        <p className="text-md text-[#444] mt-1 transition-opacity duration-300 group-hover:opacity-0 absolute left-1/2 -translate-x-1/2">
+                                            <span className="text-[#716147] font-medium">8</span> Product
+                                        </p>
 
-                                {/* Shop Now Button - hidden initially, appears on hover */}
-                                <div className="flex justify-center items-center mt-2">
-                                    <button
-                                        className="text-sm text-[#716147] hidden group-hover:inline-block animate__animated animate__fadeInUp"
-                                        onClick={() => handleclick(1)}>
-                                        Shop Now <i className="fa-solid fa-arrow-right ml-1"></i>
-                                    </button>
+                                        {/* Shop Now Button - hidden initially, appears on hover */}
+                                        <div className="flex justify-center items-center mt-2">
+                                            <button
+                                                className="text-sm text-[#716147] hidden group-hover:inline-block animate__animated animate__fadeInUp"
+                                                onClick={() => handleclick(1)}>
+                                                Shop Now <i className="fa-solid fa-arrow-right ml-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            ))
+                        }
 
-                        <div className="card  rounded-md  overflow-hidden transition-all duration-300  group" data-aos="fade-up" data-aos-delay="100">
-                            {/* Image */}
-                            <div className="flex justify-center items-center ">
-                                <img
-                                    src="https://cdn.shopify.com/s/files/1/0905/2012/files/s-dcat-6.png?v=1645586327"
-                                    alt="Chairs"
-                                    className="max-w-[200px] transition-transform duration-300"
-                                />
-                            </div>
-
-                            {/* Content */}
-                            <div className="relative card-body text-center px-4  h-[68px]">
-                                <h1 className="text-lg font-semibold text-[#2c2c2c]">Chairs</h1>
-
-                                {/* Product Text - Visible initially, hides on hover */}
-                                <p className="text-md text-[#444] mt-1 transition-opacity duration-300 group-hover:opacity-0 absolute left-1/2 -translate-x-1/2">
-                                    <span className="text-[#716147] font-medium">8</span> Product
-                                </p>
-
-                                {/* Shop Now Button - hidden initially, appears on hover */}
-                                <div className="flex justify-center items-center mt-2">
-                                    <button
-                                        className="text-sm text-[#716147] hidden group-hover:inline-block animate__animated animate__fadeInUp"
-                                    >
-                                        Shop Now <i className="fa-solid fa-arrow-right ml-1"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="card  rounded-md  overflow-hidden transition-all duration-300  group" data-aos="fade-up" data-aos-delay="100">
-                            {/* Image */}
-                            <div className="flex justify-center items-center ">
-                                <img
-                                    src="https://cdn.shopify.com/s/files/1/0905/2012/files/s-dcat-6.png?v=1645586327"
-                                    alt="Chairs"
-                                    className="max-w-[200px] transition-transform duration-300"
-                                />
-                            </div>
-
-                            {/* Content */}
-                            <div className="relative card-body text-center px-4  h-[68px]">
-                                <h1 className="text-lg font-semibold text-[#2c2c2c]">Chairs</h1>
-
-                                {/* Product Text - Visible initially, hides on hover */}
-                                <p className="text-md text-[#444] mt-1 transition-opacity duration-300 group-hover:opacity-0 absolute left-1/2 -translate-x-1/2">
-                                    <span className="text-[#716147] font-medium">8</span> Product
-                                </p>
-
-                                {/* Shop Now Button - hidden initially, appears on hover */}
-                                <div className="flex justify-center items-center mt-2">
-                                    <button
-                                        className="text-sm text-[#716147] hidden group-hover:inline-block animate__animated animate__fadeInUp"
-                                    >
-                                        Shop Now <i className="fa-solid fa-arrow-right ml-1"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="card  rounded-md  overflow-hidden transition-all duration-300  group" data-aos="fade-up" data-aos-delay="100">
-                            {/* Image */}
-                            <div className="flex justify-center items-center ">
-                                <img
-                                    src="https://cdn.shopify.com/s/files/1/0905/2012/files/s-dcat-6.png?v=1645586327"
-                                    alt="Chairs"
-                                    className="max-w-[200px] transition-transform duration-300"
-                                />
-                            </div>
-
-                            {/* Content */}
-                            <div className="relative card-body text-center px-4  h-[68px]">
-                                <h1 className="text-lg font-semibold text-[#2c2c2c]">Chairs</h1>
-
-                                {/* Product Text - Visible initially, hides on hover */}
-                                <p className="text-md text-[#444] mt-1 transition-opacity duration-300 group-hover:opacity-0 absolute left-1/2 -translate-x-1/2">
-                                    <span className="text-[#716147] font-medium">8</span> Product
-                                </p>
-
-                                {/* Shop Now Button - hidden initially, appears on hover */}
-                                <div className="flex justify-center items-center mt-2">
-                                    <button
-                                        className="text-sm text-[#716147] hidden group-hover:inline-block animate__animated animate__fadeInUp"
-                                    >
-                                        Shop Now <i className="fa-solid fa-arrow-right ml-1"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div className="card  rounded-md  overflow-hidden transition-all duration-300  group" data-aos="fade-up" data-aos-delay="100">
-                            {/* Image */}
-                            <div className="flex justify-center items-center ">
-                                <img
-                                    src="https://cdn.shopify.com/s/files/1/0905/2012/files/s-dcat-6.png?v=1645586327"
-                                    alt="Chairs"
-                                    className="max-w-[200px] transition-transform duration-300"
-                                />
-                            </div>
-
-                            {/* Content */}
-                            <div className="relative card-body text-center px-4  h-[68px]">
-                                <h1 className="text-lg font-semibold text-[#2c2c2c]">Chairs</h1>
-
-                                {/* Product Text - Visible initially, hides on hover */}
-                                <p className="text-md text-[#444] mt-1 transition-opacity duration-300 group-hover:opacity-0 absolute left-1/2 -translate-x-1/2">
-                                    <span className="text-[#716147] font-medium">8</span> Product
-                                </p>
-
-                                {/* Shop Now Button - hidden initially, appears on hover */}
-                                <div className="flex justify-center items-center mt-2">
-                                    <button
-                                        className="text-sm text-[#716147] hidden group-hover:inline-block animate__animated animate__fadeInUp"
-                                    >
-                                        Shop Now <i className="fa-solid fa-arrow-right ml-1"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div className="card  rounded-md  overflow-hidden transition-all duration-300  group" data-aos="fade-right">
-                            {/* Image */}
-                            <div className="flex justify-center items-center ">
-                                <img
-                                    src="https://cdn.shopify.com/s/files/1/0905/2012/files/s-dcat-6.png?v=1645586327"
-                                    alt="Chairs"
-                                    className="max-w-[200px] transition-transform duration-300"
-                                />
-                            </div>
-
-                            {/* Content */}
-                            <div className="relative card-body text-center px-4  h-[68px]">
-                                <h1 className="text-lg font-semibold text-[#2c2c2c]">Chairs</h1>
-
-                                {/* Product Text - Visible initially, hides on hover */}
-                                <p className="text-md text-[#444] mt-1 transition-opacity duration-300 group-hover:opacity-0 absolute left-1/2 -translate-x-1/2">
-                                    <span className="text-[#716147] font-medium">8</span> Product
-                                </p>
-
-                                {/* Shop Now Button - hidden initially, appears on hover */}
-                                <div className="flex justify-center items-center mt-2">
-                                    <button
-                                        className="text-sm text-[#716147] hidden group-hover:inline-block animate__animated animate__fadeInUp"
-                                    >
-                                        Shop Now <i className="fa-solid fa-arrow-right ml-1"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
 
 
                     </div>
@@ -309,7 +173,7 @@ function Home() {
 
             </div>
 
-            <div>
+            <div className='overflow-hidden'>
                 <div className='pt-4' data-aos="fade-up">
 
                     <div className="flex items-center justify-center space-x-2 font-semibold text-[#BD9C85] text-[14px] uppercase pb-1">
@@ -318,13 +182,12 @@ function Home() {
                         <span>BROWSE OUR ITEMS</span>
                     </div>
 
-                    <p className='text-center text-4xl uppercase font-bold '>Top Picks for You</p>
+                    <p className='text-center sm:text-4xl text-2xl uppercase font-bold '>Top Picks for You</p>
                 </div>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 lg:px-20 py-10">
+                <div className="grid sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-0 lg:px-20 py-10 gap-5 ">
                     <div
-                        className="card shadow-md w-full max-w-[300px] mx-auto h-[544px] rounded-2xl group bg-white"
+                        className="card shadow-md w-full max-w-[315px] mx-auto h-auto rounded-2xl group bg-white"
                         data-aos="fade-left"
-
                     >
                         {/* Image Section */}
                         <div className="flex justify-center relative rounded-t-2xl overflow-hidden">
@@ -372,8 +235,8 @@ function Home() {
                     </div>
 
                     <div
-                        className="card shadow-md w-full max-w-[300px] mx-auto h-[544px] rounded-2xl group bg-white"
-                        data-aos="fade-up" data-aos-delay="100"
+                        className="card shadow-md w-full max-w-[315px] mx-auto h-auto rounded-2xl group bg-white"
+                        data-aos="fade-left"
                     >
                         {/* Image Section */}
                         <div className="flex justify-center relative rounded-t-2xl overflow-hidden">
@@ -423,8 +286,8 @@ function Home() {
 
 
                     <div
-                        className="card shadow-md w-full max-w-[300px] mx-auto h-[544px] rounded-2xl group bg-white"
-                        data-aos="fade-up" data-aos-delay="100"
+                        className="card shadow-md w-full max-w-[315px] mx-auto h-auto rounded-2xl group bg-white"
+                        data-aos="fade-left"
                     >
                         {/* Image Section */}
                         <div className="flex justify-center relative rounded-t-2xl overflow-hidden">
@@ -470,13 +333,14 @@ function Home() {
                             <span className="text-[#999] text-sm">$18.90</span>
                         </div>
                     </div>
+
 
 
 
 
                     <div
-                        className="card shadow-md w-full max-w-[300px] mx-auto h-[544px] rounded-2xl group bg-white"
-                        data-aos="fade-right"
+                        className="card shadow-md w-full max-w-[315px] mx-auto h-auto rounded-2xl group bg-white"
+                        data-aos="fade-left"
                     >
                         {/* Image Section */}
                         <div className="flex justify-center relative rounded-t-2xl overflow-hidden">
@@ -522,13 +386,14 @@ function Home() {
                             <span className="text-[#999] text-sm">$18.90</span>
                         </div>
                     </div>
+
 
                 </div>
 
             </div>
 
             {/* about 03 */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 px-6 md:px-16 xl:px-28 py-16 bg-white">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 px-4 md:px-16 xl:px-28 py-10 bg-white">
 
                 {/* Left Section */}
                 <div className="space-y-10" data-aos="fade-left" data-aos-delay="100">

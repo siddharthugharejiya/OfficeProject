@@ -19,7 +19,10 @@ function App() {
   }, []);
   return (
     <>
-      <Main_Routers />
+
+      <div className="container">
+        <Main_Routers />
+      </div>
     </>
   );
 }

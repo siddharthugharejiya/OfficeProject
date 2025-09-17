@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 import 'animate.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Provider } from 'react-redux'
+import { store } from './Redux/store.js';
 
 // Initialize AOS
 AOS.init({
@@ -14,8 +16,10 @@ AOS.init({
 });
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter >
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter >
+      <App />
+    </BrowserRouter>
+  </Provider>
 
 )

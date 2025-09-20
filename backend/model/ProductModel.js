@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 const productSchema = mongoose.Schema({
     name: String,
-    Image: String,
+    Image: [String],
     title: String,
     des: String,
     rating: String,

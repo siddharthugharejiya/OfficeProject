@@ -1,9 +1,10 @@
 import express from 'express';
-import { AddProduct, getProduct, Del, edite_get, edite_post } from '../controller/ProductController.js';
+// import { AddProduct, getProduct, Del, edite_get, edite_post } from '../controller/ProductController.js';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import { AddProduct, Del, edite_get, edite_post, getProduct, SingpleProduct } from '../Controller/ProductController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,10 +62,12 @@ router.post('/upload', upload.single('image'), async (req, res) => {
 });
 
 // Product routes
-router.post('/add', AddProduct);
+
+router.post('/add', upload.array('image', 5), AddProduct);
 router.get('/get', getProduct);
 router.delete('/del/:id', Del);
 router.get('/edite-get/:id', edite_get);
+router.get('/SinglePage/:id', SingpleProduct); // New route for fetching single product details
 router.put('/edite/:id', edite_post);
 
 export default router;

@@ -18,9 +18,9 @@ function Nav() {
             relative z-50 ">
                 <div className="max-w-[1440px] mx-auto">
 
-                    {/* ---------- XS: Mobile View ---------- */}
+
                     <div className="block lg:hidden ">
-                        {/* Logo */}
+
                         <div className="w-full flex justify-center items-center mb-3">
                             <img
                                 src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/img/logo-1641277924.jpg"
@@ -29,7 +29,6 @@ function Nav() {
                             />
                         </div>
 
-                        {/* Hamburger + Icons */}
                         <div className="flex justify-between items-center">
                             <button onClick={handleToggle} className="text-xl">
                                 <FaBars />
@@ -47,9 +46,7 @@ function Nav() {
                         </div>
                     </div>
 
-                    {/* ---------- SM and Up: Original Design ---------- */}
                     <div className="hidden lg:flex items-center justify-between flex-wrap ">
-                        {/* Logo */}
                         <div className="flex items-center flex-wrap">
                             <div className='w-full flex justify-center items-center'>
                                 <img
@@ -63,7 +60,6 @@ function Nav() {
                             </div>
                         </div>
 
-                        {/* Navigation */}
                         <nav className="hidden md:flex space-x-8 items-center relative z-50 text-2xl">
 
                             <div className="relative group flex">

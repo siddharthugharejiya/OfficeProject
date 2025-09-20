@@ -8,6 +8,8 @@ import "slick-carousel/slick/slick-theme.css";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 function App() {
 
@@ -19,9 +21,11 @@ function App() {
   }, []);
   return (
     <>
+      <div className="container-fluid flex justify-center items-center">
 
-      <div className="container">
-        <Main_Routers />
+        <div className="container">
+          <Main_Routers />
+        </div>
       </div>
     </>
   );

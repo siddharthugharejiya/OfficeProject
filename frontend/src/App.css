@@ -1,7 +1,12 @@
 *{
  font-family: "Jost", sans-serif;
  /* overflow-x: hidden; */
+ /* overflow-y: hidden; */
 }
+/* Prevent horizontal scroll due to animations/carousels */
+html, body, #root { max-width: 100%; overflow-x: hidden; }
+.slick-slider, .slick-list { overflow: hidden !important; }
+[data-aos="fade-left"], [data-aos="fade-right"], [data-aos^="fade-"] { will-change: transform, opacity; }
 .animated-slider-container {
   width: 100%;
   height: 760px;
@@ -55,4 +60,22 @@
 
 .slide-button:hover {
   background-color: #a87b5c;
+}
+
+/* index.css or custom CSS file */
+.custom-toast {
+  font-weight: bold;
+  animation: pop 0.3s ease;
+  transform: scale(1);
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
 }

@@ -15,15 +15,24 @@ const slides = [
         buttonText: "View Collection",
         direction: "top",
     },
-    // {
-    //     id: 1,
-    //     image: "https://cdn.shopify.com/s/files/1/0905/2012/files/shopiodecor-slider02.jpg?v=1645586328",
-    //     subtitle: "online exclusive",
-    //     title: "simple way to setup your space",
-    //     description: "Best furniture for your house.",
-    //     buttonText: "View Collection",
-    //     direction: "top",
-    // },
+    {
+        id: 2,
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2016&q=80",
+        subtitle: "new arrivals",
+        title: "modern furniture collection",
+        description: "Transform your living space with our premium collection.",
+        buttonText: "Shop Now",
+        direction: "right",
+    },
+    {
+        id: 3,
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        subtitle: "limited time",
+        title: "luxury home decor",
+        description: "Elevate your home with our exclusive luxury pieces.",
+        buttonText: "Explore",
+        direction: "left",
+    },
 ];
 
 const getInitialPosition = (direction) => {
@@ -55,7 +64,7 @@ const AnimatedImageSlider = () => {
     return (
         <div className="w-full relative overflow-hidden">
             {/* Navigation */}
-            <div className="absolute top-0 w-full z-50 lg:block hidden">
+            <div className="absolute top-0 w-full z-50">
                 <Nav />
             </div>
 
@@ -72,70 +81,110 @@ const AnimatedImageSlider = () => {
                                     {isActive && (
                                         <motion.div
                                             key={slide.id}
-                                            className="w-full h-[50vh] xs:h-[55vh] sm:h-[70vh] md:h-[80vh] lg:h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
-                                            style={{ backgroundImage: `url(${slide.image})` }}
+                                            className="w-full h-[55vh] xs:h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-screen 2xl:h-screen flex items-center justify-center relative"
                                             initial={initial}
                                             animate={{ x: 0, y: 0, opacity: 1 }}
                                             exit={{ opacity: 0 }}
                                             transition={{ duration: 1 }}
                                         >
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 w-full xs:px-2 sm:px-10 xl:px-22 px-4">
-                                                <div className="flex flex-col justify-center items-start sm:items-center h-full">
-                                                    <div className="flex flex-col justify-center max-w-[90%] xs:max-w-[85%] sm:w-[90%] w-full">
-                                                        {/* Subtitle */}
-                                                        <motion.p
-                                                            className="text-[rgb(189_156_133)] xs:py-1 sm:py-4 py-2 xs:text-[10px] sm:text-[14px] text-[12px] font-semibold"
-                                                            initial={{ y: -30, opacity: 0 }}
-                                                            animate={{ y: 0, opacity: 1 }}
-                                                            transition={{ delay: 0.5 }}
-                                                        >
-                                                            {slide.subtitle}
-                                                        </motion.p>
+                                            {/* Background Image with responsive classes */}
+                                            <div
+                                                className="absolute inset-0 bg-contain xs:bg-contain sm:bg-cover md:bg-cover lg:bg-cover xl:bg-cover 2xl:bg-cover bg-center bg-no-repeat"
+                                                style={{ backgroundImage: `url(${slide.image})` }}
+                                            ></div>
 
-                                                        {/* Title */}
-                                                        <motion.h1
-                                                            className="font-bold uppercase xs:text-lg sm:text-3xl lg:text-5xl text-xl leading-tight xl:pr-30 sm:pr-5 pr-20"
-                                                            initial={{ x: -100, opacity: 0 }}
-                                                            animate={{ x: 0, opacity: 1 }}
-                                                            transition={{ delay: 0.7 }}
-                                                        >
-                                                            {slide.title}
-                                                        </motion.h1>
+                                            {/* Overlay for better text readability */}
+                                            <div className="absolute inset-0 bg-black/40 xs:bg-black/35 sm:bg-black/25 md:bg-black/20 lg:bg-black/15 xl:bg-black/10 2xl:bg-black/5"></div>
 
-                                                        {/* Description */}
-                                                        <motion.p
-                                                            className="text-[rgb(102_102_102)] xs:text-[10px] sm:text-[14px] text-[12px] font-medium xs:py-1 sm:py-4 py-2"
-                                                            initial={{ x: 100, opacity: 0 }}
-                                                            animate={{ x: 0, opacity: 1 }}
-                                                            transition={{ delay: 0.9 }}
-                                                        >
-                                                            {slide.description}
-                                                        </motion.p>
+                                            {/* Content */}
+                                            <div className="relative z-10 w-full max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
+                                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-4 xs:gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 2xl:gap-20 items-center h-full">
+                                                    {/* Text Content */}
+                                                    <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
+                                                        <div className="max-w-2xl">
+                                                            {/* Subtitle */}
+                                                            <motion.p
+                                                                className="text-[#b86c59] text-xs xs:text-sm sm:text-base md:text-lg font-semibold uppercase tracking-wider mb-2 sm:mb-4"
+                                                                initial={{ y: -30, opacity: 0 }}
+                                                                animate={{ y: 0, opacity: 1 }}
+                                                                transition={{ delay: 0.5 }}
+                                                            >
+                                                                {slide.subtitle}
+                                                            </motion.p>
 
-                                                        {/* Button */}
-                                                        <div>
+                                                            {/* Title */}
+                                                            <motion.h1
+                                                                className="font-bold text-white uppercase text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight mb-3 sm:mb-6"
+                                                                initial={{ x: -100, opacity: 0 }}
+                                                                animate={{ x: 0, opacity: 1 }}
+                                                                transition={{ delay: 0.7 }}
+                                                            >
+                                                                {slide.title}
+                                                            </motion.h1>
 
+                                                            {/* Description */}
+                                                            <motion.p
+                                                                className="text-gray-200 text-sm xs:text-base sm:text-lg md:text-xl font-medium mb-4 sm:mb-8 leading-relaxed"
+                                                                initial={{ x: 100, opacity: 0 }}
+                                                                animate={{ x: 0, opacity: 1 }}
+                                                                transition={{ delay: 0.9 }}
+                                                            >
+                                                                {slide.description}
+                                                            </motion.p>
+
+                                                            {/* Button */}
                                                             <motion.button
-                                                                className="bg-[#BF624C] xs:p-1.5 sm:p-3 p-2 xs:text-[10px] sm:text-[14px] text-[12px] text-white font-bold rounded-sm xs:mt-1 sm:mt-2 mt-2"
+                                                                className="bg-gradient-to-r from-[#b86c59] to-[#d4a574] hover:from-[#a55a4a] hover:to-[#c19a6b] text-white font-bold px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 text-xs sm:text-sm md:text-base rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                                                                 initial={{ y: 50, opacity: 0 }}
                                                                 animate={{ y: 0, opacity: 1 }}
                                                                 transition={{ delay: 1.1 }}
                                                             >
-                                                                {slide.buttonText} <i className="fa-solid fa-arrow-right"></i>
+                                                                {slide.buttonText}
+                                                                <i className="fa-solid fa-arrow-right ml-2"></i>
                                                             </motion.button>
                                                         </div>
                                                     </div>
+
+                                                    
                                                 </div>
                                             </div>
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
                             </div>
-
                         </div>
                     );
                 })}
             </Slider>
+
+            {/* Custom Dots Styling */}
+            <style jsx>{`
+                .slick-dots {
+                    bottom: 20px !important;
+                    z-index: 20;
+                }
+                .slick-dots li {
+                    margin: 0 8px !important;
+                }
+                .slick-dots li button:before {
+                    font-size: 12px !important;
+                    color: white !important;
+                    opacity: 0.5 !important;
+                }
+                .slick-dots li.slick-active button:before {
+                    color: #b86c59 !important;
+                    opacity: 1 !important;
+                }
+                .slick-dots li button {
+                    width: 12px !important;
+                    height: 12px !important;
+                    border-radius: 50% !important;
+                    background: rgba(255, 255, 255, 0.3) !important;
+                }
+                .slick-dots li.slick-active button {
+                    background: #b86c59 !important;
+                }
+            `}</style>
         </div>
     );
 };

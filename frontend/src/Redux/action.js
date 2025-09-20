@@ -24,12 +24,14 @@ const showToast = (message, type = "success") => {
 // FETCH PRODUCTS
 export const Product_Get = () => async (dispatch) => {
     try {
+        dispatch({ type: "Product_Get_Loading" });
         const response = await fetch("http://localhost:9595/get");
         const res = await response.json();
         dispatch({ type: "Product_Get", payload: res.data });
     } catch (error) {
         showToast("Failed to fetch products", "error");
         console.error("Product_Get error:", error);
+        dispatch({ type: "Product_Get_Error", payload: error.message });
     }
 };
 

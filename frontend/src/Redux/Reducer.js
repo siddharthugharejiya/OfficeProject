@@ -2,12 +2,18 @@
 
 
 const initialstate = {
-    Product: []
+    Product: [],
+    loading: false,
+    error: null
 }
 export const Product_Get_reducer = (state = initialstate, action) => {
     switch (action.type) {
+        case "Product_Get_Loading":
+            return { ...state, loading: true, error: null }
         case "Product_Get":
-            return { ...state, Product: action.payload }
+            return { ...state, Product: action.payload, loading: false, error: null }
+        case "Product_Get_Error":
+            return { ...state, loading: false, error: action.payload }
         default:
             return state
     }

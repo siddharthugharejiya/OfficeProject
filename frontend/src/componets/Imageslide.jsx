@@ -15,24 +15,24 @@ const slides = [
         buttonText: "View Collection",
         direction: "top",
     },
-    {
-        id: 2,
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2016&q=80",
-        subtitle: "new arrivals",
-        title: "modern furniture collection",
-        description: "Transform your living space with our premium collection.",
-        buttonText: "Shop Now",
-        direction: "right",
-    },
-    {
-        id: 3,
-        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-        subtitle: "limited time",
-        title: "luxury home decor",
-        description: "Elevate your home with our exclusive luxury pieces.",
-        buttonText: "Explore",
-        direction: "left",
-    },
+    // {
+    //     id: 2,
+    //     image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2016&q=80",
+    //     subtitle: "new arrivals",
+    //     title: "modern furniture collection",
+    //     description: "Transform your living space with our premium collection.",
+    //     buttonText: "Shop Now",
+    //     direction: "right",
+    // },
+    // {
+    //     id: 3,
+    //     image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    //     subtitle: "limited time",
+    //     title: "luxury home decor",
+    //     description: "Elevate your home with our exclusive luxury pieces.",
+    //     buttonText: "Explore",
+    //     direction: "left",
+    // },
 ];
 
 const getInitialPosition = (direction) => {
@@ -81,7 +81,7 @@ const AnimatedImageSlider = () => {
                                     {isActive && (
                                         <motion.div
                                             key={slide.id}
-                                            className="w-full h-[55vh] xs:h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-screen 2xl:h-screen flex items-center justify-center relative"
+                                            className="w-full h-[48vh] xs:h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-screen 2xl:h-screen flex items-center justify-center relative"
                                             initial={initial}
                                             animate={{ x: 0, y: 0, opacity: 1 }}
                                             exit={{ opacity: 0 }}
@@ -94,7 +94,7 @@ const AnimatedImageSlider = () => {
                                             ></div>
 
                                             {/* Overlay for better text readability */}
-                                            <div className="absolute inset-0 bg-black/40 xs:bg-black/35 sm:bg-black/25 md:bg-black/20 lg:bg-black/15 xl:bg-black/10 2xl:bg-black/5"></div>
+                                            {/* <div className="absolute inset-0 bg-black/40 xs:bg-black/35 sm:bg-black/25 md:bg-black/20 lg:bg-black/15 xl:bg-black/10 2xl:bg-black/5"></div> */}
 
                                             {/* Content */}
                                             <div className="relative z-10 w-full max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
@@ -145,7 +145,7 @@ const AnimatedImageSlider = () => {
                                                         </div>
                                                     </div>
 
-                                                    
+
                                                 </div>
                                             </div>
                                         </motion.div>

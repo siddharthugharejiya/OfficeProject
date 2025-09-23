@@ -142,12 +142,12 @@ function Home() {
     return (
         <div className="overflow-hidden">
             <AnimatedImageSlider />
-            <div className="py-15 border-b-1 border-b-[#716147]">
+            <div className="sm:py-15 py-2 border-b-1 border-b-[#716147]">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-24 2xl:px-32">
                     <div className='p-4 flex flex-col justify-center items-center text-center' data-aos="fade-up" data-aos-delay="0">
                         {/* image */}
                         <div className='pb-4'>
-                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon5.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" />
+                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon5.png" alt="" className="w-11 h-11 sm:w-14 sm:h-14" />
                         </div>
                         {/* content */}
                         <div>
@@ -159,7 +159,7 @@ function Home() {
                     <div className='p-4 flex flex-col justify-center items-center text-center' data-aos="fade-up" data-aos-delay="100">
                         {/* image */}
                         <div className='pb-4'>
-                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon6.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" />
+                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon6.png" alt="" className="w-11 h-11 sm:w-14 sm:h-14" />
                         </div>
                         {/* content */}
                         <div>
@@ -171,7 +171,7 @@ function Home() {
                     <div className='p-4 flex flex-col justify-center items-center text-center' data-aos="fade-up" data-aos-delay="200">
                         {/* image */}
                         <div className='pb-4'>
-                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon7.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" />
+                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon7.png" alt="" className="w-11 h-11 sm:w-14 sm:h-14" />
                         </div>
                         {/* content */}
                         <div>
@@ -183,7 +183,7 @@ function Home() {
                     <div className='p-4 flex flex-col justify-center items-center text-center' data-aos="fade-up" data-aos-delay="300">
                         {/* image */}
                         <div className='pb-4'>
-                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon8.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" />
+                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon8.png" alt="" className="w-11 h-11 sm:w-14 sm:h-14" />
                         </div>
                         {/* content */}
                         <div>
@@ -204,26 +204,28 @@ function Home() {
                     <h3 className='text-center text-2xl sm:text-3xl md:text-4xl uppercase font-bold'>shop by category</h3>
                 </div>
                 {/* product */}
-                <div className="px-2 sm:px-4 py-6">
-                    {isLoading ? (
-                        <Slider {...settings1}>
-                            {[1, 2, 3, 4].map((index) => (
-                                <ProductCardSkeleton key={index} />
-                            ))}
-                        </Slider>
-                    ) : (
-                        <Slider {...settings1}>
-                            {Product.map((item, index) => {
-                                const image1 = Array.isArray(item.Image) && item.Image.length > 0 ? item.Image[0] : "";
-                                const image2 = Array.isArray(item.Image) && item.Image.length > 1 ? item.Image[1] : image1;
+                <div className="w-full flex justify-center px-2 sm:px-4 py-6">
+                    <div className="max-w-[1400px] w-full">
+                        {isLoading ? (
+                            <Slider {...settings1}>
+                                {[1, 2, 3, 4].map((index) => (
+                                    <ProductCardSkeleton key={index} />
+                                ))}
+                            </Slider>
+                        ) : (
+                            <Slider {...settings1}>
+                                {Product.map((item, index) => {
+                                    const image1 = Array.isArray(item.Image) && item.Image.length > 0 ? item.Image[0] : "";
+                                    const image2 = Array.isArray(item.Image) && item.Image.length > 1 ? item.Image[1] : image1;
 
-                                return (
-                                    <>
-                                        <div className="card w-[18rem] flex group flex-col items-center transition-transform duration-300 hover:scale-[1.03] cursor-pointer">
-                                            <div className="  flex items-center justify-center">
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="card w-[18rem] flex group flex-col items-center transition-transform duration-300 hover:scale-[1.03] cursor-pointer"
+                                        >
+                                            <div className="flex items-center justify-center">
                                                 <div className="relative w-[285px] h-[285px] card-flip flex justify-center items-center mx-auto">
                                                     <div className="card-inner">
-                                                        {/* Front Image */}
                                                         <div className="card-front">
                                                             <img
                                                                 src={item.Image?.[0] || '/placeholder.png'}
@@ -237,10 +239,8 @@ function Home() {
                                                                     </div>
                                                                 </span>
                                                             )}
-
                                                         </div>
 
-                                                        {/* Back Image */}
                                                         <div className="card-back">
                                                             <img
                                                                 src={item.Image?.[1] || '/placeholder.png'}
@@ -256,20 +256,25 @@ function Home() {
                                                 <h5 className="text-base sm:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2 line-clamp-2">
                                                     {item.name}
                                                 </h5>
-                                                <div className='text-gray-600'>
+                                                <div className="text-gray-600">
                                                     <p className="text-sm sm:text-base text-gray-600 line-clamp-2 group-hover:hidden block">{item.des}</p>
-                                                    <div className='hidden group-hover:block' type='button' onClick={() => handleclick(item._id)}>View More <i class="fa-solid fa-arrow-right"></i></div>
+                                                    <div
+                                                        className="hidden group-hover:block"
+                                                        type="button"
+                                                        onClick={() => handleclick(item._id)}
+                                                    >
+                                                        View More <i className="fa-solid fa-arrow-right"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                    </>
-                                );
-
-                            })}
-                        </Slider>
-                    )}
+                                    );
+                                })}
+                            </Slider>
+                        )}
+                    </div>
                 </div>
+
             </div>
 
             <div className='py-10'>

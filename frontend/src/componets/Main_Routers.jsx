@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './Home'
 import AdminPanel from './AdminPanel'
 import SinglePage from './SinglePage'
+import ProductPage from './ProductPage'
+import Contect from './Contect'
 
 function Main_Routers() {
     return (
@@ -10,6 +12,8 @@ function Main_Routers() {
             <Route path='/' element={<Home />} />
             <Route path='/admin' element={<AdminPanel />} />
             <Route path='/SinglePage/:id' element={<SinglePage />} />
+            <Route path='/Product/:id' element={<ProductPage />} />
+            <Route path='/contact' element={<Contect />} />
         </Routes>
     )
 }

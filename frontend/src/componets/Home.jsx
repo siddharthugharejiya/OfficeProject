@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect } from 'react'
 import { Product_del, Product_Get } from '../Redux/action'
 import Slider from 'react-slick'
 import { useNavigate } from 'react-router-dom'
+import "../App.css"
 import { ProductCardSkeleton, FeaturedProductSkeleton, BlogCardSkeleton, LoadingSpinner } from './SkeletonLoader'
 
 function Home() {
@@ -15,7 +16,9 @@ function Home() {
 
 
     const handleclick = (e) => {
-        nav(`/SinglePage/${e}`)
+        console.log(e);
+
+        nav(`/Product/${e}`)
 
     }
 
@@ -125,6 +128,15 @@ function Home() {
         ]
     };
 
+    const firstProductsByCategory = Object.values(
+        Product.reduce((acc, product) => {
+            if (!acc[product.category]) {
+                acc[product.category] = product; // सिर्फ पहला product रखो
+            }
+            return acc;
+        }, {})
+    );
+    console.log(firstProductsByCategory);
 
 
     return (
@@ -206,47 +218,54 @@ function Home() {
                                 const image2 = Array.isArray(item.Image) && item.Image.length > 1 ? item.Image[1] : image1;
 
                                 return (
-                                    <div key={index} className="px-2 sm:px-3">
-                                        <div className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden w-full">
-                                            {/* Classic Image Container with Zoom Effect */}
-                                            <div className="slider-image-container relative h-[200px] sm:h-[220px] md:h-[240px] lg:h-[255px] w-full bg-gray-50 overflow-hidden cursor-zoom-in">
-                                                <img
-                                                    src={image1}
-                                                    alt={item?.name || "Product Image"}
-                                                    className="h-full w-full object-contain p-2 sm:p-3 md:p-4"
-                                                    onError={(e) => (e.target.src = "https://via.placeholder.com/200?text=No+Image")}
-                                                />
+                                    <>
+                                        <div className="card w-[18rem] flex group flex-col items-center transition-transform duration-300 hover:scale-[1.03] cursor-pointer">
+                                            <div className="  flex items-center justify-center">
+                                                <div className="relative w-[285px] h-[285px] card-flip flex justify-center items-center mx-auto">
+                                                    <div className="card-inner">
+                                                        {/* Front Image */}
+                                                        <div className="card-front">
+                                                            <img
+                                                                src={item.Image?.[0] || '/placeholder.png'}
+                                                                alt={item.name}
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                            {item.tag && (
+                                                                <span className="absolute top-3 -left-3 text-xs font-semibold rounded-full z-10">
+                                                                    <div className="bg-[#B0D3FF] text-white h-[20px] px-2 flex items-center justify-center rounded-full">
+                                                                        {item.tag}
+                                                                    </div>
+                                                                </span>
+                                                            )}
+
+                                                        </div>
+
+                                                        {/* Back Image */}
+                                                        <div className="card-back">
+                                                            <img
+                                                                src={item.Image?.[1] || '/placeholder.png'}
+                                                                alt={item.name}
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            {/* Classic Content */}
-                                            <div className="p-3 sm:p-4 text-center border-t border-gray-100">
-                                                <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2 line-clamp-2">
+                                            <div className="card-body p-4 text-center">
+                                                <h5 className="text-base sm:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2 line-clamp-2">
                                                     {item.name}
-                                                </h3>
-
-                                                <div className="flex items-center justify-center mb-3">
-                                                    <div className="flex text-yellow-400">
-                                                        {[1, 2, 3, 4, 5].map((star) => (
-                                                            <i key={star} className="fa-solid fa-star text-xs sm:text-sm"></i>
-                                                        ))}
-                                                    </div>
-                                                    <span className="ml-2 text-xs sm:text-sm text-gray-500">(12 reviews)</span>
+                                                </h5>
+                                                <div className='text-gray-600'>
+                                                    <p className="text-sm sm:text-base text-gray-600 line-clamp-2 group-hover:hidden block">{item.des}</p>
+                                                    <div className='hidden group-hover:block' type='button' onClick={() => handleclick(item._id)}>View More <i class="fa-solid fa-arrow-right"></i></div>
                                                 </div>
-
-                                                <div className="mb-3">
-                                                    <span className="text-lg sm:text-xl font-semibold text-gray-900">$299.00</span>
-                                                </div>
-
-                                                <button
-                                                    onClick={() => handleclick(item._id)}
-                                                    className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 px-3 sm:px-4 rounded text-sm sm:text-base transition-colors duration-200"
-                                                >
-                                                    View Product
-                                                </button>
                                             </div>
                                         </div>
-                                    </div>
+
+                                    </>
                                 );
+
                             })}
                         </Slider>
                     )}
@@ -272,210 +291,157 @@ function Home() {
                     ) : (
                         <>
                             <div
-                                className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+                                className="hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                                 data-aos="fade-up"
                                 data-aos-delay="0"
                             >
-                                {/* Classic Image Section with Zoom Effect */}
-                                <div className="slider-image-container relative overflow-hidden cursor-zoom-in">
+                                {/* Image Section */}
+                                <div className="relative overflow-hidden cursor-zoom-in">
                                     <img
                                         src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/207-home_default_square/mountain-fox-cushion.jpg"
-                                        className="h-[250px] w-full object-cover"
+                                        className="h-[300px] w-full object-cover"
                                         alt="product"
                                     />
 
-                                    {/* Classic Sale Badge */}
-                                    <div className="absolute top-4 left-4 bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded">
+                                    {/* Sale Badge */}
+                                    <div className="absolute top-2 left-2 bg-[#B0D3FF] text-white text-xs font-semibold px-2 py-0.5 rounded">
                                         Sale
                                     </div>
                                 </div>
 
-                                {/* Classic Content Section */}
-                                <div className="p-5">
-                                    <div className="mb-2">
-                                        <span className="text-sm text-gray-600 uppercase tracking-wide">Furniture</span>
+                                {/* Content Section */}
+                                <div className="p-3 text-center">
+                                    <div className="mb-1">
+                                        <span className="text-xs text-gray-600 uppercase tracking-wide">Furniture</span>
                                     </div>
 
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
                                         Ruud-Jan Kokke Slat Chair
                                     </h3>
 
-                                    <p className="text-gray-600 mb-4">
+                                    <p className="text-gray-600 text-sm">
                                         The Netherlands, 1986 - Premium quality furniture with timeless design.
                                     </p>
-
-                                    <div className="flex items-center mb-4">
-                                        <div className="flex text-yellow-400 mr-2">
-                                            {[1, 2, 3, 4, 5].map((star) => (
-                                                <i key={star} className="fa-solid fa-star text-sm"></i>
-                                            ))}
-                                        </div>
-                                        <span className="text-sm text-gray-500">(24 reviews)</span>
-                                    </div>
-
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center space-x-2">
-                                            <span className="text-2xl font-bold text-gray-900">$18.90</span>
-                                            <span className="text-lg text-gray-400 line-through">$24.90</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
+
 
                             <div
-                                className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+                                className="hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                                 data-aos="fade-up"
-                                data-aos-delay="100"
+                                data-aos-delay="0"
                             >
-                                {/* Classic Image Section with Zoom Effect */}
-                                <div className="slider-image-container relative overflow-hidden cursor-zoom-in">
+                                {/* Image Section */}
+                                <div className="relative overflow-hidden cursor-zoom-in">
                                     <img
                                         src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/207-home_default_square/mountain-fox-cushion.jpg"
-                                        className="h-[250px] w-full object-cover"
+                                        className="h-[300px] w-full object-cover"
                                         alt="product"
                                     />
 
-                                    {/* Classic Sale Badge */}
-                                    <div className="absolute top-4 left-4 bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded">
+                                    {/* Sale Badge */}
+                                    <div className="absolute top-2 left-2 bg-[#B0D3FF] text-white text-xs font-semibold px-2 py-0.5 rounded">
                                         Sale
                                     </div>
                                 </div>
 
-                                {/* Classic Content Section */}
-                                <div className="p-5">
-                                    <div className="mb-2">
-                                        <span className="text-sm text-gray-600 uppercase tracking-wide">Furniture</span>
+                                {/* Content Section */}
+                                <div className="p-3 text-center">
+                                    <div className="mb-1">
+                                        <span className="text-xs text-gray-600 uppercase tracking-wide">Furniture</span>
                                     </div>
 
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
                                         Ruud-Jan Kokke Slat Chair
                                     </h3>
 
-                                    <p className="text-gray-600 mb-4">
+                                    <p className="text-gray-600 text-sm">
                                         The Netherlands, 1986 - Premium quality furniture with timeless design.
                                     </p>
-
-                                    <div className="flex items-center mb-4">
-                                        <div className="flex text-yellow-400 mr-2">
-                                            {[1, 2, 3, 4, 5].map((star) => (
-                                                <i key={star} className="fa-solid fa-star text-sm"></i>
-                                            ))}
-                                        </div>
-                                        <span className="text-sm text-gray-500">(24 reviews)</span>
-                                    </div>
-
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center space-x-2">
-                                            <span className="text-2xl font-bold text-gray-900">$18.90</span>
-                                            <span className="text-lg text-gray-400 line-through">$24.90</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
+
+
 
 
 
                             <div
-                                className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+                                className="hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                                 data-aos="fade-up"
-                                data-aos-delay="100"
+                                data-aos-delay="0"
                             >
-                                {/* Classic Image Section with Zoom Effect */}
-                                <div className="slider-image-container relative overflow-hidden cursor-zoom-in">
+                                {/* Image Section */}
+                                <div className="relative overflow-hidden cursor-zoom-in">
                                     <img
                                         src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/207-home_default_square/mountain-fox-cushion.jpg"
-                                        className="h-[250px] w-full object-cover"
+                                        className="h-[300px] w-full object-cover"
                                         alt="product"
                                     />
 
-                                    {/* Classic Sale Badge */}
-                                    <div className="absolute top-4 left-4 bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded">
+                                    {/* Sale Badge */}
+                                    <div className="absolute top-2 left-2 bg-[#B0D3FF] text-white text-xs font-semibold px-2 py-0.5 rounded">
                                         Sale
                                     </div>
                                 </div>
 
-                                {/* Classic Content Section */}
-                                <div className="p-5">
-                                    <div className="mb-2">
-                                        <span className="text-sm text-gray-600 uppercase tracking-wide">Furniture</span>
+                                {/* Content Section */}
+                                <div className="p-3 text-center">
+                                    <div className="mb-1">
+                                        <span className="text-xs text-gray-600 uppercase tracking-wide">Furniture</span>
                                     </div>
 
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
                                         Ruud-Jan Kokke Slat Chair
                                     </h3>
 
-                                    <p className="text-gray-600 mb-4">
+                                    <p className="text-gray-600 text-sm">
                                         The Netherlands, 1986 - Premium quality furniture with timeless design.
                                     </p>
-
-                                    <div className="flex items-center mb-4">
-                                        <div className="flex text-yellow-400 mr-2">
-                                            {[1, 2, 3, 4, 5].map((star) => (
-                                                <i key={star} className="fa-solid fa-star text-sm"></i>
-                                            ))}
-                                        </div>
-                                        <span className="text-sm text-gray-500">(24 reviews)</span>
-                                    </div>
-
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center space-x-2">
-                                            <span className="text-2xl font-bold text-gray-900">$18.90</span>
-                                            <span className="text-lg text-gray-400 line-through">$24.90</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
+
+
+
+
+
 
                             <div
-                                className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+                                className="hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                                 data-aos="fade-up"
-                                data-aos-delay="100"
+                                data-aos-delay="0"
                             >
-                                {/* Classic Image Section with Zoom Effect */}
-                                <div className="slider-image-container relative overflow-hidden cursor-zoom-in">
+                                {/* Image Section */}
+                                <div className="relative overflow-hidden cursor-zoom-in">
                                     <img
                                         src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/207-home_default_square/mountain-fox-cushion.jpg"
-                                        className="h-[250px] w-full object-cover"
+                                        className="h-[300px] w-full object-cover"
                                         alt="product"
                                     />
 
-                                    {/* Classic Sale Badge */}
-                                    <div className="absolute top-4 left-4 bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded">
+                                    {/* Sale Badge */}
+                                    <div className="absolute top-2 left-2 bg-[#B0D3FF] text-white text-xs font-semibold px-2 py-0.5 rounded">
                                         Sale
                                     </div>
                                 </div>
 
-                                {/* Classic Content Section */}
-                                <div className="p-5">
-                                    <div className="mb-2">
-                                        <span className="text-sm text-gray-600 uppercase tracking-wide">Furniture</span>
+                                {/* Content Section */}
+                                <div className="p-3 text-center">
+                                    <div className="mb-1">
+                                        <span className="text-xs text-gray-600 uppercase tracking-wide">Furniture</span>
                                     </div>
 
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
                                         Ruud-Jan Kokke Slat Chair
                                     </h3>
 
-                                    <p className="text-gray-600 mb-4">
+                                    <p className="text-gray-600 text-sm">
                                         The Netherlands, 1986 - Premium quality furniture with timeless design.
                                     </p>
-
-                                    <div className="flex items-center mb-4">
-                                        <div className="flex text-yellow-400 mr-2">
-                                            {[1, 2, 3, 4, 5].map((star) => (
-                                                <i key={star} className="fa-solid fa-star text-sm"></i>
-                                            ))}
-                                        </div>
-                                        <span className="text-sm text-gray-500">(24 reviews)</span>
-                                    </div>
-
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center space-x-2">
-                                            <span className="text-2xl font-bold text-gray-900">$18.90</span>
-                                            <span className="text-lg text-gray-400 line-through">$24.90</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
+
+
+
                         </>
                     )}
                 </div>
@@ -483,7 +449,7 @@ function Home() {
             </div>
 
             {/* about 03 */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 lg:gap-10 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28 py-10 bg-white">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 lg:gap-10 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28 py-10 ">
 
                 {/* Left Section */}
                 <div className="space-y-6 lg:space-y-10" data-aos="fade-up" data-aos-delay="100">

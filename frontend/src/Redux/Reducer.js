@@ -82,3 +82,22 @@ export const SinglePage_reducer = (state = initialState2, { type, payload }) => 
     }
 
 }
+
+
+
+const initialState3 = {
+    Product: [], // ✅ सही
+    loading: false,
+    error: null
+};
+
+
+export const Product_Page_reducer = (state = initialState3, { type, payload }) => {
+    switch (type) {
+        case "Product":
+            return { ...state, Product: payload }
+        default:
+            return state
+    }
+
+}

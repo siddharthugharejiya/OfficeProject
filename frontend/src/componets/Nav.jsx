@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaSearch, FaHeart, FaUser, FaShoppingBag, FaBars, FaTimes } from 'react-icons/fa';
 
+import { Link } from "react-router-dom";
 function Nav() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => setIsOpen(!isOpen);
+    const [open, setOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    // Click outside to close
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     return (
         <>
@@ -63,77 +77,98 @@ function Nav() {
                         <nav className="hidden md:flex space-x-8 items-center relative z-50 text-2xl">
 
                             <div className="relative group flex">
-                                <button
+                                <Link
+                                    to="/"
                                     onClick={() => setActiveIndex(0)}
                                     className="text-[17px] font-medium text-[#2c2c2c] hover:text-[#b86c59] focus:outline-none relative"
                                 >
                                     Home
                                     <span className={`absolute left-1/2 -bottom-1 h-[2px] bg-[#b86c59] transition-all duration-300 ${activeIndex === 0 ? 'w-full translate-x-[-50%]' : 'w-0 group-hover:w-full group-hover:translate-x-[-50%]'} `}></span>
-                                </button>
+                                </Link>
                             </div>
 
                             <div className="relative group flex">
-                                <button
+                                <Link
+                                    to="/shop"
                                     onClick={() => setActiveIndex(1)}
                                     className="text-[17px] font-medium text-[#2c2c2c] hover:text-[#b86c59] focus:outline-none relative"
                                 >
                                     Shop
                                     <span className={`absolute left-1/2 -bottom-1 h-[2px] bg-[#b86c59] transition-all duration-300 ${activeIndex === 1 ? 'w-full translate-x-[-50%]' : 'w-0 group-hover:w-full group-hover:translate-x-[-50%]'} `}></span>
-                                </button>
+                                </Link>
                             </div>
 
                             <div className="relative group flex">
-                                <button
+                                <Link
+                                    to="/product"
                                     onClick={() => setActiveIndex(2)}
                                     className="text-[17px] font-medium text-[#2c2c2c] hover:text-[#b86c59] focus:outline-none relative"
                                 >
                                     Product
                                     <span className={`absolute left-1/2 -bottom-1 h-[2px] bg-[#b86c59] transition-all duration-300 ${activeIndex === 2 ? 'w-full translate-x-[-50%]' : 'w-0 group-hover:w-full group-hover:translate-x-[-50%]'} `}></span>
-                                </button>
+                                </Link>
                             </div>
 
-                            <div className="relative group flex">
-                                <button
+                            {/* <div className="relative group flex">
+                                <Link
+                                    to="/pages"
                                     onClick={() => setActiveIndex(3)}
                                     className="text-[17px] font-medium text-[#2c2c2c] hover:text-[#b86c59] focus:outline-none relative"
                                 >
                                     Pages
                                     <span className={`absolute left-1/2 -bottom-1 h-[2px] bg-[#b86c59] transition-all duration-300 ${activeIndex === 3 ? 'w-full translate-x-[-50%]' : 'w-0 group-hover:w-full group-hover:translate-x-[-50%]'} `}></span>
-                                </button>
-                            </div>
+                                </Link>
+                            </div> */}
 
                             <div className="relative group flex">
-                                <button
+                                <Link
+                                    to="/blogs"
                                     onClick={() => setActiveIndex(4)}
                                     className="text-[17px] font-medium text-[#2c2c2c] hover:text-[#b86c59] focus:outline-none relative"
                                 >
                                     Blogs
                                     <span className={`absolute left-1/2 -bottom-1 h-[2px] bg-[#b86c59] transition-all duration-300 ${activeIndex === 4 ? 'w-full translate-x-[-50%]' : 'w-0 group-hover:w-full group-hover:translate-x-[-50%]'} `}></span>
-                                </button>
+                                </Link>
                             </div>
 
                             <div className="relative group flex">
-                                <button
+                                <Link
+                                    to="/contact"
                                     onClick={() => setActiveIndex(5)}
                                     className="text-[17px] font-medium text-[#2c2c2c] hover:text-[#b86c59] focus:outline-none relative"
                                 >
                                     Contact
                                     <span className={`absolute left-1/2 -bottom-1 h-[2px] bg-[#b86c59] transition-all duration-300 ${activeIndex === 5 ? 'w-full translate-x-[-50%]' : 'w-0 group-hover:w-full group-hover:translate-x-[-50%]'} `}></span>
-                                </button>
+                                </Link>
                             </div>
 
                         </nav>
 
+
                         {/* Icons Right */}
                         <div className="hidden sm:flex items-center space-x-6 text-[18px] text-[#333] font-normal">
-                            <i className="fa fa-search cursor-pointer hover:scale-110 transition"></i>
-                            <i className="fa fa-heart cursor-pointer hover:scale-110 transition"></i>
-                            <i className="fa fa-user cursor-pointer hover:scale-110 transition"></i>
+                            <img src="../image/search.png" className='h-[20px]' alt="" />
+                            <img src="../image/heart.png" className='h-[20px]' alt="" />
+                            <div className="relative" ref={dropdownRef}>
+                                <img src="../image/user.png" className='h-[20px]' alt="" onClick={() => setOpen(!open)} />
+
+                                {open && (
+                                    <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-10 ">
+                                        <ul className="flex flex-col">
+                                            <li>
+                                                <Link
+                                                    to="/admin"
+                                                    className="block px-4 py-2 hover:bg-gray-100 hover:rounded-lg cursor-pointer"
+                                                >
+                                                    Admin Panel
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
                             <div className="relative cursor-pointer hover:scale-110 transition">
-                                <i className="fa fa-shopping-bag"></i>
-                                <span className="absolute -top-2 -right-2 bg-black text-white text-xs px-1 rounded-full">
-                                    0
-                                </span>
+                                <img src="../image/shopping-cart.png" className='h-[20px]' alt="" />
                             </div>
                         </div>
                     </div>
@@ -149,14 +184,57 @@ function Nav() {
                     </button>
                 </div>
 
+
                 <nav className="flex flex-col p-4 space-y-3">
-                    <button onClick={() => { setActiveIndex(0); setIsOpen(false); }} className="text-left hover:text-[#b86c59]">Home</button>
-                    <button onClick={() => { setActiveIndex(1); setIsOpen(false); }} className="text-left hover:text-[#b86c59]">Shop</button>
-                    <button onClick={() => { setActiveIndex(2); setIsOpen(false); }} className="text-left hover:text-[#b86c59]">Product</button>
-                    <button onClick={() => { setActiveIndex(3); setIsOpen(false); }} className="text-left hover:text-[#b86c59]">Pages</button>
-                    <button onClick={() => { setActiveIndex(4); setIsOpen(false); }} className="text-left hover:text-[#b86c59]">Blogs</button>
-                    <button onClick={() => { setActiveIndex(5); setIsOpen(false); }} className="text-left hover:text-[#b86c59]">Contact</button>
+                    <Link
+                        to="/"
+                        onClick={() => { setActiveIndex(0); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Home
+                    </Link>
+
+                    <Link
+                        to="/shop"
+                        onClick={() => { setActiveIndex(1); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Shop
+                    </Link>
+
+                    <Link
+                        to="/product"
+                        onClick={() => { setActiveIndex(2); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Product
+                    </Link>
+
+                    {/* <Link
+                        to="/pages"
+                        onClick={() => { setActiveIndex(3); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Pages
+                    </Link> */}
+
+                    <Link
+                        to="/blogs"
+                        onClick={() => { setActiveIndex(4); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Blogs
+                    </Link>
+
+                    <Link
+                        to="/contact"
+                        onClick={() => { setActiveIndex(5); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Contact
+                    </Link>
                 </nav>
+
             </div>
 
             {/* Backdrop */}

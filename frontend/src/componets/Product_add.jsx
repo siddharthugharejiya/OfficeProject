@@ -227,7 +227,37 @@ const Product_add = () => {
                 <div><input name="rating" type="number" value={state.rating} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Rating" /></div>
                 <div><input name="price" type="number" value={state.price} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Price" /></div>
                 <div><input name="weight" value={state.weight} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Weight" /></div>
-                <div><input name="category" value={state.category} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Category" /></div>
+
+                <div>
+                    <div className="space-y-2">
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            onChange={handlechange}
+                            value={state.category}
+                            name="category"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                        >
+                            <option value="">Select a category</option>
+                            <option value="One Piece Closet">One Piece Closet</option>
+                            <option value="Wall Hung Closet">Wall Hung Closet</option>
+                            <option value="Water Closet">Water Closet</option>
+                            <option value="Table Top Basin">Table Top Basin</option>
+                            <option value="One Piece Basin">One Piece Basin</option>
+                            <option value="Counter Basin">Counter Basin</option>
+                            <option value="Basin With Pedestal">Basin With Pedestal</option>
+                            <option value="Basin With Half Pedestal">Basin With Half Pedestal</option>
+                            <option value="Wall Hung Basin">Wall Hung Basin</option>
+                            <option value="Urinal">Urinal</option>
+                            <option value="Pan">Pan</option>
+                            <option value="Pastel Series">Pastel Series</option>
+                        </select>
+                    </div>
+
+                </div>
                 <div><input name="tag" value={state.tag} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Tag" /></div>
 
                 <button type="submit" className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded text-lg mt-4" disabled={loading}>

@@ -128,3 +128,15 @@ export const SingleProduct_Action = (id) => async (dispatch) => {
         console.error("SingleProduct error:", error);
     }
 };
+
+export const Product_Action = (id) => async (dispatch) => {
+    try {
+        const response = await fetch(`http://localhost:9595/product/${id}`);
+        const data = await response.json(); // ✔️ direct json data मिलेगा (product object)
+
+        dispatch({ type: "Product", payload: data }); // ✔️ यहां res.data मत लिखो
+    } catch (error) {
+        console.error("Product error:", error);
+    }
+};
+

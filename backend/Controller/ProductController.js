@@ -117,6 +117,33 @@ export const SingpleProduct = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: "Something went wrong", error: err.message });
     }
+}
+
+export const Product_get = async (req, res) => {
+    try {
+        // Step 1: पहले वो product find करें
+        const product = await ProductModel.findById(req.params.id);
+        if (!product) return res.status(404).json({ message: "Product not found" });
+
+        // Step 2: उस product की category लें
+        const category = product.category;
+
+        // Step 3: उसी category के सारे products fetch करें
+        const productsByCategory = await ProductModel.find({ category });
+
+        // Step 4: images map करें
+        const data = productsByCategory.map(p => ({
+            ...p.toObject(),
+            Image: mapImageArray(p.Image, req)
+        }));
+
+        res.status(200).json({
+            message: "Fetched products by category",
+            data
+        });
+    } catch (err) {
+        res.status(500).json({ message: "Something went wrong", error: err.message });
+    }
 };
 
 // === Delete Product ===

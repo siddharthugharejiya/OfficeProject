@@ -72,61 +72,51 @@ function Home() {
 
     const isLoading = useSelector(state => state.Product.loading || false)
     console.log("Product:", Product);
-
     const settings1 = {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 4,
+        slidesToShow: 4, // Default for larger screens
         slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        pauseOnHover: true,
+        centerMode: true, // Enable center mode for xs screens
+        centerPadding: '0px', // No padding to ensure the card fits perfectly
         responsive: [
             {
-                breakpoint: 1400, // xxl
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 1200, // xl
+                breakpoint: 1280, // xl
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 1
-                }
+                    slidesToScroll: 1,
+                    centerMode: false,
+                },
             },
             {
-                breakpoint: 992, // lg
+                breakpoint: 1024, // lg
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 1
-                }
+                    slidesToScroll: 1,
+                    centerMode: false,
+                },
             },
             {
                 breakpoint: 768, // md
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 1
-                }
+                    slidesToScroll: 1,
+                    centerMode: false,
+                },
             },
             {
-                breakpoint: 576, // sm
+                breakpoint: 640, // sm
                 settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1
-                }
+                    slidesToScroll: 1,
+                    centerMode: true, // Center the single card
+                    centerPadding: '0px', // No extra padding to match card width
+                },
             },
-            {
-                breakpoint: 480, // xs
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
+        ],
     };
+
 
     const firstProductsByCategory = Object.values(
         Product.reduce((acc, product) => {
@@ -204,7 +194,7 @@ function Home() {
                     <h3 className='text-center text-2xl sm:text-3xl md:text-4xl uppercase font-bold'>shop by category</h3>
                 </div>
                 {/* product */}
-                <div className="w-full flex justify-center px-2 sl sm:px-4 py-6">
+                <div className="w-full flex justify-center px-2 sm:px-4 py-6">
                     <div className="w-full max-w-[1400px]">
                         {isLoading ? (
                             <Slider {...settings1}>
@@ -219,14 +209,16 @@ function Home() {
                                     const image2 = Array.isArray(item.Image) && item.Image.length > 1 ? item.Image[1] : image1;
 
                                     return (
-                                        <div key={index} className="flex justify-center px-2  sl"> {/* Added px-2 for spacing */}
+                                        <div key={index} className="flex justify-center px-2"> {/* Spacing between slides */}
                                             <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem] flex group flex-col items-center transition-transform duration-300 hover:scale-[1.03] cursor-pointer">
+
+                                                {/* Card Image Flip Section */}
                                                 <div className="flex items-center justify-center w-full">
                                                     <div className="relative w-full aspect-square max-w-[285px] card-flip flex justify-center items-center mx-auto">
                                                         <div className="card-inner w-full h-full">
                                                             <div className="card-front w-full h-full">
                                                                 <img
-                                                                    src={item.Image?.[0] || '/placeholder.png'}
+                                                                    src={image1 || '/placeholder.png'}
                                                                     alt={item.name}
                                                                     className="w-full h-full object-cover"
                                                                 />
@@ -241,7 +233,7 @@ function Home() {
 
                                                             <div className="card-back w-full h-full">
                                                                 <img
-                                                                    src={item.Image?.[1] || '/placeholder.png'}
+                                                                    src={image2 || '/placeholder.png'}
                                                                     alt={item.name}
                                                                     className="w-full h-full object-cover"
                                                                 />
@@ -250,6 +242,7 @@ function Home() {
                                                     </div>
                                                 </div>
 
+                                                {/* Card Text */}
                                                 <div className="card-body p-3 sm:p-4 text-center w-full">
                                                     <h5 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2 line-clamp-2">
                                                         {item.name}
@@ -267,6 +260,7 @@ function Home() {
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     );
@@ -275,6 +269,7 @@ function Home() {
                         )}
                     </div>
                 </div>
+
 
             </div>
 

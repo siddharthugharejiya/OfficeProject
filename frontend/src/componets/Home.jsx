@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
-import Nav from './Nav'
+
 import AnimatedImageSlider from './Imageslide'
 import Footer from './Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useLayoutEffect } from 'react'
 import { Product_del, Product_Get } from '../Redux/action'
-import Slider from 'react-slick'
 import { useNavigate } from 'react-router-dom'
+import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "../App.css"
 import { ProductCardSkeleton, FeaturedProductSkeleton, BlogCardSkeleton, LoadingSpinner } from './SkeletonLoader'
+
 
 function Home() {
     const dispatch = useDispatch()
@@ -72,50 +78,39 @@ function Home() {
 
     const isLoading = useSelector(state => state.Product.loading || false)
     console.log("Product:", Product);
-    const settings1 = {
+    const settings111 = {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 4, // Default for larger screens
+        slidesToShow: 4,
         slidesToScroll: 1,
-        centerMode: true, // Enable center mode for xs screens
-        centerPadding: '0px', // No padding to ensure the card fits perfectly
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnHover: true,
         responsive: [
             {
-                breakpoint: 1280, // xl
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    centerMode: false,
-                },
+                breakpoint: 1280,
+                settings: { slidesToShow: 3 }
             },
             {
-                breakpoint: 1024, // lg
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    centerMode: false,
-                },
+                breakpoint: 1024,
+                settings: { slidesToShow: 2 }
             },
             {
-                breakpoint: 768, // md
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    centerMode: false,
-                },
-            },
-            {
-                breakpoint: 640, // sm
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    centerMode: true, // Center the single card
-                    centerPadding: '0px', // No extra padding to match card width
-                },
-            },
-        ],
+                breakpoint: 640,
+                settings: { slidesToShow: 1 }
+            }
+        ]
     };
+
+    const settingss = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3
+    };
+
 
 
     const firstProductsByCategory = Object.values(
@@ -195,21 +190,28 @@ function Home() {
                 </div>
                 {/* product */}
                 <div className="w-full flex justify-center px-2 sm:px-4 py-6">
-                    <div className="w-full max-w-[1400px] product-slider-wrapper">
-                        {isLoading ? (
-                            <Slider {...settings1}>
-                                {[1, 2, 3, 4].map((index) => (
-                                    <ProductCardSkeleton key={index} />
-                                ))}
-                            </Slider>
-                        ) : (
-                            <Slider {...settings1}>
-                                {Product.map((item, index) => {
-                                    const image1 = Array.isArray(item.Image) && item.Image.length > 0 ? item.Image[0] : "";
-                                    const image2 = Array.isArray(item.Image) && item.Image.length > 1 ? item.Image[1] : image1;
-
-                                    return (
-                                        <div key={index} className="flex justify-center px-2"> {/* Spacing between slides */}
+                    <div className="w-full max-w-7xl mx-auto py-8">
+                        <Swiper
+                            // modules={[Navigation, Pagination]}
+                            // navigation
+                            // pagination={{ clickable: true }}
+                            spaceBetween={20}
+                            slidesPerView={4} // Desktop default
+                            breakpoints={{
+                                1536: { slidesPerView: 4 }, // 4 products on XL
+                                1280: { slidesPerView: 3 },
+                                1024: { slidesPerView: 3 },
+                                768: { slidesPerView: 2 },
+                                640: { slidesPerView: 1 },
+                                480: { slidesPerView: 1 },
+                                300: { slidesPerView: 1 },
+                            }}
+                            loop={true}
+                        >
+                            {
+                                Product.map((item, index) => (
+                                    <SwiperSlide key={item.id}>
+                                        <div key={index} className="px-2 flex justify-center">
                                             <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem] flex group flex-col items-center transition-transform duration-300 hover:scale-[1.03] cursor-pointer min-h-[390px] m-1">
                                                 {/* Card Image Flip Section */}
                                                 <div className="flex items-center justify-center w-full">
@@ -217,7 +219,7 @@ function Home() {
                                                         <div className="card-inner w-full h-full">
                                                             <div className="card-front w-full h-full">
                                                                 <img
-                                                                    src={image1 || '/placeholder.png'}
+                                                                    src={item.Image[0] || "/placeholder.png"}
                                                                     alt={item.name}
                                                                     className="w-full h-full object-cover"
                                                                 />
@@ -231,7 +233,7 @@ function Home() {
                                                             </div>
                                                             <div className="card-back w-full h-full">
                                                                 <img
-                                                                    src={image2 || '/placeholder.png'}
+                                                                    src={item.Image[1] || "/placeholder.png"}
                                                                     alt={item.name}
                                                                     className="w-full h-full object-cover"
                                                                 />
@@ -239,24 +241,24 @@ function Home() {
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 {/* Card Text */}
                                                 <div className="card-body p-3 sm:p-4 text-center w-full min-h-[120px] md:min-h-[120px] flex flex-col justify-center">
-                                                    <h5 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2 line-clamp-2">
+                                                    <h5 className="text-[17px] sm:text-base lg:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2 line-clamp-2">
                                                         {item.name}
                                                     </h5>
                                                     <div className="text-gray-600 min-h-[80px] md:min-h-[45px]">
-                                                        <p className="text-xs sm:text-sm lg:text-base text-gray-600 line-clamp-2 group-hover:hidden block min-h-[10px]">
+                                                        <p className="text-[15px] sm:text-sm lg:text-base text-gray-600 line-clamp-2 group-hover:hidden block min-h-[10px]">
                                                             {item.des}
                                                         </p>
-                                                        {/* View More - always visible on mobile, hover on desktop */}
                                                         <div
-                                                            className="block md:hidden text-xs sm:text-[13px] text-[#BD9C85] font-medium cursor-pointer mt-2"
+                                                            className="block md:hidden text-[15px] sm:text-[17px] text-[#BD9C85] font-medium cursor-pointer mt-2"
                                                             onClick={() => handleclick(item._id)}
                                                         >
                                                             View More <i className="fa-solid fa-arrow-right ml-1"></i>
                                                         </div>
                                                         <div
-                                                            className="hidden md:group-hover:block text-sm sm:text-base text-[#BD9C85] font-medium cursor-pointer "
+                                                            className="hidden md:group-hover:block text-sm sm:text-base text-[#BD9C85] font-medium cursor-pointer"
                                                             onClick={() => handleclick(item._id)}
                                                         >
                                                             View More <i className="fa-solid fa-arrow-right ml-1"></i>
@@ -265,12 +267,12 @@ function Home() {
                                                 </div>
                                             </div>
                                         </div>
-                                    );
-                                })}
-                            </Slider>
-                        )}
+                                    </SwiperSlide>
+                                ))}
+                        </Swiper>
                     </div>
                 </div>
+
 
 
 

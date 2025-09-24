@@ -5,7 +5,9 @@
 }
 /* Prevent horizontal scroll due to animations/carousels */
 html, body, #root { max-width: 100%; overflow-x: hidden; }
-.slick-slider, .slick-list { overflow: hidden !important; }
+
+.slick-slider,
+ .slick-list { overflow: hidden !important; }
 [data-aos="fade-left"], [data-aos="fade-right"], [data-aos^="fade-"] { will-change: transform, opacity; }
 .animated-slider-container {
   width: 100%;
@@ -208,12 +210,12 @@ html, body, #root { max-width: 100%; overflow-x: hidden; }
 .slick-slide{
   width: 100% !important;
 }
-
+/* 
 .product-slider-wrapper .slick-track{
   width: 250px !important;
 }
 .sl {
   display: flex !important;
   justify-content: center;
-}
+} */
 

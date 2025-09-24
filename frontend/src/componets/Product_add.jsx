@@ -1,4 +1,3 @@
-
 // ✅ Updated Product_add.jsx with Multiple Image Upload (Link + File)
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +6,7 @@ import { product_add_action, Product_edite_get, product_edite_action } from '../
 const Product_add = () => {
     const dispatch = useDispatch();
     const product_edite = useSelector(state => state.Product_edite_getting?.edite_data || {});
-    console.log(product_edite);
-
+    // console.log(product_edite);
 
     const [update, setupdate] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -37,7 +35,7 @@ const Product_add = () => {
             setstate({
                 id: productData._id || "",
                 name: productData.name || "",
-                Image: Array.isArray(productData.Image) ? productData.Image : [], // हमेशा array में convert करें
+                Image: Array.isArray(productData.Image) ? productData.Image : [],
                 title: productData.title || "",
                 des: productData.des || "",
                 rating: productData.rating || "",
@@ -47,7 +45,6 @@ const Product_add = () => {
                 category: productData.category || ""
             });
 
-            // अगर पहले से selectedFiles भी रखना है तो उन्हें भी reset कर सकते हैं
             if (Array.isArray(productData.Image)) {
                 const previews = productData.Image.map(url => ({ file: null, preview: url }));
                 setSelectedFiles(previews);
@@ -58,7 +55,6 @@ const Product_add = () => {
             setupdate(true);
         }
     }, [product_edite]);
-
 
     const handlechange = (e) => {
         const { name, value } = e.target;
@@ -93,10 +89,16 @@ const Product_add = () => {
     const uploadAllImages = async () => {
         const urls = [];
         for (const imgObj of selectedFiles) {
+            // Skip images added via link (file is null)
+            if (!imgObj.file) {
+                urls.push(imgObj.preview);
+                continue;
+            }
+
             const formData = new FormData();
             formData.append('image', imgObj.file);
 
-            const response = await fetch('http://localhost:9595/upload', {
+            const response = await fetch('https://officeproject-backend-1.onrender.com/upload', {
                 method: 'POST',
                 body: formData,
             });
@@ -222,11 +224,7 @@ const Product_add = () => {
                 )}
 
                 {/* Other Fields */}
-                <div><input name="title" value={state.title} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Title" /></div>
                 <div><textarea name="des" value={state.des} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Description" /></div>
-                <div><input name="rating" type="number" value={state.rating} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Rating" /></div>
-                <div><input name="price" type="number" value={state.price} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Price" /></div>
-                <div><input name="weight" value={state.weight} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Weight" /></div>
 
                 <div>
                     <div className="space-y-2">
@@ -256,7 +254,6 @@ const Product_add = () => {
                             <option value="Pastel Series">Pastel Series</option>
                         </select>
                     </div>
-
                 </div>
                 <div><input name="tag" value={state.tag} onChange={handlechange} className="w-full p-2 rounded bg-white/10 text-white" placeholder="Tag" /></div>
 

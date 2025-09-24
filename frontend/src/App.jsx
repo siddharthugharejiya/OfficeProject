@@ -1,14 +1,11 @@
 
 import './App.css';
-import Home from './componets/Home';
 import Main_Routers from './componets/Main_Routers';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
-import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
 function App() {

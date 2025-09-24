@@ -190,11 +190,8 @@ function Home() {
                 </div>
                 {/* product */}
                 <div className="w-full flex justify-center px-2 sm:px-4 py-6">
-                    <div className="w-full max-w-7xl mx-auto py-8">
+                    <div className="w-full max-w-7xl mx-auto ">
                         <Swiper
-                            // modules={[Navigation, Pagination]}
-                            // navigation
-                            // pagination={{ clickable: true }}
                             spaceBetween={20}
                             slidesPerView={4} // Desktop default
                             breakpoints={{
@@ -208,67 +205,80 @@ function Home() {
                             }}
                             loop={true}
                         >
-                            {
-                                Product.map((item, index) => (
-                                    <SwiperSlide key={item.id}>
-                                        <div key={index} className="px-2 flex justify-center">
-                                            <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem] flex group flex-col items-center transition-transform duration-300 hover:scale-[1.03] cursor-pointer min-h-[390px] m-1">
-                                                {/* Card Image Flip Section */}
-                                                <div className="flex items-center justify-center w-full">
-                                                    <div className="relative w-full aspect-square max-w-[285px] max-h-[285px] card-flip flex justify-center items-center mx-auto">
-                                                        <div className="card-inner w-full h-full">
-                                                            <div className="card-front w-full h-full">
-                                                                <img
-                                                                    src={item.Image[0] || "/placeholder.png"}
-                                                                    alt={item.name}
-                                                                    className="w-full h-full object-cover"
-                                                                />
-                                                                {item.tag && (
-                                                                    <span className="absolute top-3 left-3 text-xs font-semibold rounded-full z-10">
-                                                                        <div className="bg-[#B0D3FF] text-white h-[20px] px-2 flex items-center justify-center rounded-full">
-                                                                            {item.tag}
-                                                                        </div>
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                            <div className="card-back w-full h-full">
-                                                                <img
-                                                                    src={item.Image[1] || "/placeholder.png"}
-                                                                    alt={item.name}
-                                                                    className="w-full h-full object-cover"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                            {Product.map((item, index) => (
+                                <SwiperSlide key={item.id}>
+                                    <div key={index} className="flex justify-center items-stretch h-full">
+                                        <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem] flex group flex-col items-center transition-transform duration-300 cursor-pointer m-1 origin-center z-0">
 
-                                                {/* Card Text */}
-                                                <div className="card-body p-3 sm:p-4 text-center w-full min-h-[120px] md:min-h-[120px] flex flex-col justify-center">
-                                                    <h5 className="text-[17px] sm:text-base lg:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2 line-clamp-2">
-                                                        {item.name}
-                                                    </h5>
-                                                    <div className="text-gray-600 min-h-[80px] md:min-h-[45px]">
-                                                        <p className="text-[15px] sm:text-sm lg:text-base text-gray-600 line-clamp-2 group-hover:hidden block min-h-[10px]">
-                                                            {item.des}
-                                                        </p>
-                                                        <div
-                                                            className="block md:hidden text-[15px] sm:text-[17px] text-[#BD9C85] font-medium cursor-pointer mt-2"
-                                                            onClick={() => handleclick(item._id)}
-                                                        >
-                                                            View More <i className="fa-solid fa-arrow-right ml-1"></i>
+                                            {/* 🔄 Image Flip Section */}
+                                            <div className="flex items-center justify-center w-full">
+                                                <div className="relative w-full aspect-square max-w-[285px] max-h-[285px] mx-auto [perspective:1000px]">
+                                                    <div className="w-full h-full relative transition-transform duration-700 [transform-style:preserve-3d] group-hover:md:[transform:rotateY(180deg)]">
+
+                                                        {/* Front Image */}
+                                                        <div className="absolute inset-0 [backface-visibility:hidden]">
+                                                            <img
+                                                                src={item.Image[0] || "/placeholder.png"}
+                                                                alt={item.name}
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                            {item.tag && (
+                                                                <span className="absolute top-3 left-3 text-xs font-semibold rounded-full z-10">
+                                                                    <div className="bg-[#B0D3FF] text-white h-[20px] px-2 flex items-center justify-center rounded-full">
+                                                                        {item.tag}
+                                                                    </div>
+                                                                </span>
+                                                            )}
                                                         </div>
-                                                        <div
-                                                            className="hidden md:group-hover:block text-sm sm:text-base text-[#BD9C85] font-medium cursor-pointer"
-                                                            onClick={() => handleclick(item._id)}
-                                                        >
-                                                            View More <i className="fa-solid fa-arrow-right ml-1"></i>
+
+                                                        {/* Back Image */}
+                                                        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                                                            <img
+                                                                src={item.Image[1] || "/placeholder.png"}
+                                                                alt={item.name}
+                                                                className="w-full h-full object-cover"
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            {/* 🔽 Card Text Section */}
+
+                                            <div className="card-body h-[150px] p-3 sm:p-4 text-center w-full flex flex-col justify-start">
+                                                {/* Title */}
+                                                <h5 className="text-[17px] sm:text-base lg:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2">
+                                                    {item.name}
+                                                </h5>
+
+                                                {/* Description */}
+                                                <div className="text-gray-600">
+                                                    <p className="text-[15px] sm:text-sm lg:text-base text-gray-600  break-words ">
+                                                        {item.des}
+                                                    </p>
+
+                                                    {/* View More Buttons */}
+                                                    <div
+                                                        className="block md:hidden text-[15px] sm:text-[17px] text-[#BD9C85] font-medium cursor-pointer mt-2"
+                                                        onClick={() => handleclick(item._id)}
+                                                    >
+                                                        View More <i className="fa-solid fa-arrow-right ml-1"></i>
+                                                    </div>
+                                                    <div
+                                                        className="hidden md:group-hover:block text-sm sm:text-base text-[#BD9C85] font-medium cursor-pointer mt-2"
+                                                        onClick={() => handleclick(item._id)}
+                                                    >
+                                                        View More <i className="fa-solid fa-arrow-right ml-1"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
-                                    </SwiperSlide>
-                                ))}
+                                    </div>
+                                </SwiperSlide>
+
+
+                            ))}
                         </Swiper>
                     </div>
                 </div>
@@ -278,7 +288,7 @@ function Home() {
 
             </div>
 
-            <div className='sm:py-5 py-1'>
+            <div className='sm:py-10 py-1'>
                 <div className='pt-4 px-4' data-aos="fade-up">
                     <div className="flex items-center justify-center space-x-2 font-semibold text-[#BD9C85] text-sm uppercase pb-2">
                         <span>02</span>
@@ -305,7 +315,7 @@ function Home() {
                                 <div className="relative overflow-hidden cursor-zoom-in">
                                     <img
                                         src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/207-home_default_square/mountain-fox-cushion.jpg"
-                                        className="h-[300px] w-full object-cover"
+                                        className="h-[400px] w-full object-cover"
                                         alt="product"
                                     />
 
@@ -341,7 +351,7 @@ function Home() {
                                 <div className="relative overflow-hidden cursor-zoom-in">
                                     <img
                                         src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/207-home_default_square/mountain-fox-cushion.jpg"
-                                        className="h-[300px] w-full object-cover"
+                                        className="h-[400px] w-full object-cover"
                                         alt="product"
                                     />
 
@@ -380,7 +390,7 @@ function Home() {
                                 <div className="relative overflow-hidden cursor-zoom-in">
                                     <img
                                         src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/207-home_default_square/mountain-fox-cushion.jpg"
-                                        className="h-[300px] w-full object-cover"
+                                        className="h-[400px] w-full object-cover"
                                         alt="product"
                                     />
 
@@ -420,7 +430,7 @@ function Home() {
                                 <div className="relative overflow-hidden cursor-zoom-in">
                                     <img
                                         src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/207-home_default_square/mountain-fox-cushion.jpg"
-                                        className="h-[300px] w-full object-cover"
+                                        className="h-[400px] w-full object-cover"
                                         alt="product"
                                     />
 

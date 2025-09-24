@@ -113,7 +113,7 @@ function SinglePage() {
                 <h2 className="text-3xl font-bold text-gray-800">{product.name}</h2>
               </div>
 
-              <p className="text-gray-600 leading-relaxed mb-6">{product.des}</p>
+              <p className="text-gray-600 leading-relaxed mb-6 wrap-anywhere">{product.des}</p>
 
               {/* Security, Delivery, Return */}
               <div className="space-y-5">

@@ -205,3 +205,14 @@ html, body, #root { max-width: 100%; overflow-x: hidden; }
 .card-back {
   transform: rotateY(180deg);
 }
+.slick-slide{
+  width: 100% !important;
+}
+
+/* .slick-track{
+  width: 100% !important;
+} */
+
+.sl{
+  display: flex !important;
+}

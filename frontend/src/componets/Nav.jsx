@@ -48,13 +48,29 @@ function Nav() {
                                 <FaBars />
                             </button>
 
-                            <div className="flex items-center space-x-5 text-lg">
-                                <FaSearch className="cursor-pointer" />
-                                <FaHeart className="cursor-pointer" />
-                                <FaUser className="cursor-pointer" />
-                                <div className="relative cursor-pointer">
-                                    <FaShoppingBag />
-                                    <span className="absolute -top-2 -right-2 bg-black text-white text-xs px-1 rounded-full">0</span>
+                            <div className="flex sm:flex items-center space-x-6 text-[18px] text-[#333] font-normal">
+                                <img src="../image/search.png" className='h-[20px]' alt="" />
+                                <img src="../image/heart.png" className='h-[20px]' alt="" />
+                                <div className="relative" ref={dropdownRef}>
+                                    <img src="../image/user.png" className='h-[20px]' alt="" onClick={() => setOpen(!open)} />
+
+                                    {open && (
+                                        <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-10 ">
+                                            <ul className="flex flex-col">
+                                                <li>
+                                                    <Link
+                                                        to="/admin"
+                                                        className="block px-4 py-2 hover:bg-gray-100 hover:rounded-lg cursor-pointer"
+                                                    >
+                                                        Admin Panel
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="relative cursor-pointer hover:scale-110 transition">
+                                    <img src="../image/shopping-cart.png" className='h-[20px]' alt="" />
                                 </div>
                             </div>
                         </div>

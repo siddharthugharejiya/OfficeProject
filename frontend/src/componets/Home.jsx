@@ -137,7 +137,7 @@ function Home() {
                     <div className='p-4 flex flex-col justify-center items-center text-center' data-aos="fade-up" data-aos-delay="0">
                         {/* image */}
                         <div className='pb-4'>
-                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon5.png" alt="" className="w-11 h-11 sm:w-14 sm:h-14" />
+                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon5.png" alt="" className="w-9 h-9 sm:w-14 sm:h-14" />
                         </div>
                         {/* content */}
                         <div>
@@ -149,7 +149,7 @@ function Home() {
                     <div className='p-4 flex flex-col justify-center items-center text-center' data-aos="fade-up" data-aos-delay="100">
                         {/* image */}
                         <div className='pb-4'>
-                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon6.png" alt="" className="w-11 h-11 sm:w-14 sm:h-14" />
+                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon6.png" alt="" className="w-9 h-9 sm:w-14 sm:h-14" />
                         </div>
                         {/* content */}
                         <div>
@@ -161,7 +161,7 @@ function Home() {
                     <div className='p-4 flex flex-col justify-center items-center text-center' data-aos="fade-up" data-aos-delay="200">
                         {/* image */}
                         <div className='pb-4'>
-                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon7.png" alt="" className="w-11 h-11 sm:w-14 sm:h-14" />
+                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon7.png" alt="" className="w-9 h-9 sm:w-14 sm:h-14" />
                         </div>
                         {/* content */}
                         <div>
@@ -173,7 +173,7 @@ function Home() {
                     <div className='p-4 flex flex-col justify-center items-center text-center' data-aos="fade-up" data-aos-delay="300">
                         {/* image */}
                         <div className='pb-4'>
-                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon8.png" alt="" className="w-11 h-11 sm:w-14 sm:h-14" />
+                            <img src="https://demo74.leotheme.com/prestashop/leo_shopiodecor_demo/themes/leo_shopiodecor/assets/img/modules/appagebuilder/images/decor-icon8.png" alt="" className="w-9 h-9 sm:w-14 sm:h-14" />
                         </div>
                         {/* content */}
                         <div>
@@ -184,7 +184,7 @@ function Home() {
                 </div>
             </div>
 
-            <div className="py-5 mt-10 pb-10">
+            <div className="sm:py-5 sm:mt-10 mb-3  py-2 mt-1 pb-1">
                 <div className='mb-6 px-4' data-aos="fade-up">
                     <div className="flex items-center justify-center space-x-2 font-semibold text-[#BD9C85] text-sm uppercase pb-2">
                         <span>01</span>
@@ -195,7 +195,7 @@ function Home() {
                 </div>
                 {/* product */}
                 <div className="w-full flex justify-center px-2 sm:px-4 py-6">
-                    <div className="w-full max-w-[1400px]">
+                    <div className="w-full max-w-[1400px] product-slider-wrapper">
                         {isLoading ? (
                             <Slider {...settings1}>
                                 {[1, 2, 3, 4].map((index) => (
@@ -210,11 +210,10 @@ function Home() {
 
                                     return (
                                         <div key={index} className="flex justify-center px-2"> {/* Spacing between slides */}
-                                            <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem] flex group flex-col items-center transition-transform duration-300 hover:scale-[1.03] cursor-pointer">
-
+                                            <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem] flex group flex-col items-center transition-transform duration-300 hover:scale-[1.03] cursor-pointer min-h-[390px] m-1">
                                                 {/* Card Image Flip Section */}
                                                 <div className="flex items-center justify-center w-full">
-                                                    <div className="relative w-full aspect-square max-w-[285px] card-flip flex justify-center items-center mx-auto">
+                                                    <div className="relative w-full aspect-square max-w-[285px] max-h-[285px] card-flip flex justify-center items-center mx-auto">
                                                         <div className="card-inner w-full h-full">
                                                             <div className="card-front w-full h-full">
                                                                 <img
@@ -230,7 +229,6 @@ function Home() {
                                                                     </span>
                                                                 )}
                                                             </div>
-
                                                             <div className="card-back w-full h-full">
                                                                 <img
                                                                     src={image2 || '/placeholder.png'}
@@ -241,26 +239,30 @@ function Home() {
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 {/* Card Text */}
-                                                <div className="card-body p-3 sm:p-4 text-center w-full">
+                                                <div className="card-body p-3 sm:p-4 text-center w-full min-h-[120px] md:min-h-[120px] flex flex-col justify-center">
                                                     <h5 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2 line-clamp-2">
                                                         {item.name}
                                                     </h5>
-                                                    <div className="text-gray-600">
-                                                        <p className="text-xs sm:text-sm lg:text-base text-gray-600 line-clamp-2 group-hover:hidden block min-h-[40px]">
+                                                    <div className="text-gray-600 min-h-[80px] md:min-h-[45px]">
+                                                        <p className="text-xs sm:text-sm lg:text-base text-gray-600 line-clamp-2 group-hover:hidden block min-h-[10px]">
                                                             {item.des}
                                                         </p>
+                                                        {/* View More - always visible on mobile, hover on desktop */}
                                                         <div
-                                                            className="hidden group-hover:block text-sm sm:text-base text-[#BD9C85] font-medium cursor-pointer"
-                                                            type="button"
+                                                            className="block md:hidden text-xs sm:text-[13px] text-[#BD9C85] font-medium cursor-pointer mt-2"
+                                                            onClick={() => handleclick(item._id)}
+                                                        >
+                                                            View More <i className="fa-solid fa-arrow-right ml-1"></i>
+                                                        </div>
+                                                        <div
+                                                            className="hidden md:group-hover:block text-sm sm:text-base text-[#BD9C85] font-medium cursor-pointer "
                                                             onClick={() => handleclick(item._id)}
                                                         >
                                                             View More <i className="fa-solid fa-arrow-right ml-1"></i>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     );
@@ -271,9 +273,10 @@ function Home() {
                 </div>
 
 
+
             </div>
 
-            <div className='py-10'>
+            <div className='sm:py-5 py-1'>
                 <div className='pt-4 px-4' data-aos="fade-up">
                     <div className="flex items-center justify-center space-x-2 font-semibold text-[#BD9C85] text-sm uppercase pb-2">
                         <span>02</span>

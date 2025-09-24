@@ -209,10 +209,11 @@ html, body, #root { max-width: 100%; overflow-x: hidden; }
   width: 100% !important;
 }
 
-.slick-track{
+.product-slider-wrapper .slick-track{
   width: 250px !important;
 }
 .sl {
   display: flex !important;
   justify-content: center;
 }
+

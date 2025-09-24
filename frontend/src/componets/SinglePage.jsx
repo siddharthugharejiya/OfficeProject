@@ -164,7 +164,7 @@ function SinglePage() {
       </section>
       <div>
         <h1 className='uppercase text-2xl text-center font-semibold text-[#514633] mb-7 pb-5 border-b-[#eaeaea] border-b-1'>You might also like</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-30">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:px-30 px-0">
           {releted.map((item) => (
             <div
               key={item._id}

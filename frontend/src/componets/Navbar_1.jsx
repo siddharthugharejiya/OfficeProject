@@ -3,11 +3,8 @@ import { Link } from "react-router-dom";
 
 function Navbar_1() {
     const [openDropdown, setOpenDropdown] = useState(false);
-    const [openMenu, setOpenMenu] = useState(false); // mobile menu state
-    // const dropdownRef = useRef(null);
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handleToggle = () => setIsOpen(!isOpen);
+    const [openMenu, setOpenMenu] = useState(false);
+    const [animateMenu, setAnimateMenu] = useState(false);
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -21,11 +18,28 @@ function Navbar_1() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    const handleOpenMenu = () => {
+        setOpenMenu(true);
+        setTimeout(() => setAnimateMenu(true), 10); // wait for mounting
+    };
+
+    const handleCloseMenu = () => {
+        setAnimateMenu(false); // slide out
+        setTimeout(() => setOpenMenu(false), 300); // wait for transition to complete
+    };
+
     return (
         <div className="bg-white text-black w-full relative z-50 py-1">
             {/* 🔹 Top Bar */}
-            <div className="flex justify-between items-center px-6 py-4 lg:px-30">
-                {/* Left: Phone */}
+            <div className="flex justify-between items-center px-4 sm:px-6 py-4 lg:px-30">
+                {/* Mobile Menu Icon */}
+                <div className="md:hidden">
+                    <button onClick={handleOpenMenu}>
+                        <i className="fa fa-bars text-2xl text-[#333]"></i>
+                    </button>
+                </div>
+
+                {/* Left: Phone (desktop only) */}
                 <div className="font-medium text-xl hidden md:block">012-345-6789</div>
 
                 {/* Center: Logo */}
@@ -37,15 +51,14 @@ function Navbar_1() {
                     />
                 </div>
 
-                {/* Right: Icons */}
+                {/* Right: Icons (desktop only) */}
                 <div className="hidden sm:flex items-center space-x-6 text-[18px] text-[#333] font-normal">
                     <img src="../image/search.png" className='h-[20px]' alt="" />
                     <img src="../image/heart.png" className='h-[20px]' alt="" />
                     <div className="relative" ref={dropdownRef}>
                         <img src="../image/user.png" className='h-[20px]' alt="" onClick={() => setOpen(!open)} />
-
                         {open && (
-                            <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-10 ">
+                            <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-10">
                                 <ul className="flex flex-col">
                                     <li>
                                         <Link
@@ -79,42 +92,38 @@ function Navbar_1() {
                 <Link to="/" className="hover:text-[#b86c59] transition">Home</Link>
                 <Link to="/shop" className="hover:text-[#b86c59] transition">Shop</Link>
                 <Link to="/product" className="hover:text-[#b86c59] transition">Product</Link>
-                {/* <Link to="/pages" className="hover:text-[#b86c59] transition">Pages</Link> */}
                 <Link to="/blogs" className="hover:text-[#b86c59] transition">Blogs</Link>
                 <Link to="/contact" className="hover:text-[#b86c59] transition">Contact</Link>
             </nav>
 
-
-            {/* 🔹 Offcanvas Menu - Mobile */}
+            {/* 🔹 Offcanvas Menu - Mobile Only */}
             {openMenu && (
                 <div
-                    className="fixed inset-0 z-50 bg-[#00000080] bg-opacity-50 transition-opacity duration-300"
-                    onClick={() => setOpenMenu(false)}
+                    className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50"
+                    onClick={handleCloseMenu}
                 >
                     <div
-                        className="fixed right-0 top-0 w-64 h-full bg-white shadow-lg p-6 flex flex-col transform transition-transform duration-300"
-                        style={{ transform: openMenu ? "translateX(0)" : "translateX(100%)" }}
-                        onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside menu
+                        className={`fixed left-0 top-0 w-[260px] h-full bg-white shadow-lg p-6 flex flex-col
+                        transform transition-transform duration-300 ease-in-out
+                        ${animateMenu ? 'translate-x-0' : '-translate-x-full'}
+                    `}
+                        onClick={(e) => e.stopPropagation()}
                     >
                         {/* Close Button */}
                         <div className="flex justify-end mb-6">
                             <i
                                 className="fa fa-times text-2xl cursor-pointer"
-                                onClick={() => setOpenMenu(false)}
+                                onClick={handleCloseMenu}
                             ></i>
                         </div>
 
                         {/* Menu Items */}
-
                         <Link to="/" className="text-left py-2 hover:text-[#b86c59] transition">Home</Link>
                         <Link to="/shop" className="text-left py-2 hover:text-[#b86c59] transition">Shop</Link>
                         <Link to="/product" className="text-left py-2 hover:text-[#b86c59] transition">Product</Link>
-                        {/* <Link to="/pages" className="text-left py-2 hover:text-[#b86c59] transition">Pages</Link> */}
                         <Link to="/blogs" className="text-left py-2 hover:text-[#b86c59] transition">Blogs</Link>
                         <Link to="/contact" className="text-left py-2 hover:text-[#b86c59] transition">Contact</Link>
 
-
-                        {/* Optional: Cart & User */}
                         <div className="mt-4 border-t pt-4">
                             <Link to="/login" className="flex items-center space-x-2 py-2">
                                 <i className="fa fa-user"></i>
@@ -125,11 +134,9 @@ function Navbar_1() {
                                 <span>Cart (0)</span>
                             </Link>
                         </div>
-
                     </div>
                 </div>
             )}
-
         </div>
     );
 }

@@ -25,7 +25,7 @@ const showToast = (message, type = "success") => {
 export const Product_Get = () => async (dispatch) => {
     try {
         dispatch({ type: "Product_Get_Loading" });
-        const response = await fetch("https://officeproject-backend-1.onrender.com/get");
+        const response = await fetch("http://localhost:9595/get");
         const res = await response.json();
         dispatch({ type: "Product_Get", payload: res.data });
     } catch (error) {
@@ -38,7 +38,7 @@ export const Product_Get = () => async (dispatch) => {
 // ADD PRODUCT
 export const product_add_action = (data) => async (dispatch) => {
     try {
-        const response = await fetch("https://officeproject-backend-1.onrender.com/add", {
+        const response = await fetch("http://localhost:9595/add", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -59,7 +59,7 @@ export const product_add_action = (data) => async (dispatch) => {
 // DELETE PRODUCT
 export const Product_del = (id) => async (dispatch) => {
     try {
-        const response = await fetch(`https://officeproject-backend-1.onrender.com/del/${id}`, {
+        const response = await fetch(`http://localhost:9595/del/${id}`, {
             method: "DELETE"
         });
 
@@ -76,7 +76,7 @@ export const Product_del = (id) => async (dispatch) => {
 // EDIT GET PRODUCT
 export const Product_edite_get = (id) => async (dispatch) => {
     try {
-        const response = await fetch(`https://officeproject-backend-1.onrender.com/edite-get/${id}`);
+        const response = await fetch(`http://localhost:9595/edite-get/${id}`);
         const res = await response.json();
 
         dispatch({ type: "Product_Edite_get", payload: res })
@@ -90,7 +90,7 @@ export const Product_edite_get = (id) => async (dispatch) => {
 // EDIT PRODUCT
 export const product_edite_action = (id, productData) => async (dispatch) => {
     try {
-        const response = await fetch(`https://officeproject-backend-1.onrender.com/edite/${id}`, {
+        const response = await fetch(`http://localhost:9595/edite/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -120,7 +120,7 @@ export const product_edite_action = (id, productData) => async (dispatch) => {
 
 export const SingleProduct_Action = (id) => async (dispatch) => {
     try {
-        const response = await fetch(`https://officeproject-backend-1.onrender.com/SinglePage/${id}`);
+        const response = await fetch(`http://localhost:9595/SinglePage/${id}`);
         const data = await response.json(); // ✔️ direct json data मिलेगा (product object)
 
         dispatch({ type: "Single_Product", payload: data }); // ✔️ यहां res.data मत लिखो
@@ -131,12 +131,35 @@ export const SingleProduct_Action = (id) => async (dispatch) => {
 
 export const Product_Action = (id) => async (dispatch) => {
     try {
-        const response = await fetch(`https://officeproject-backend-1.onrender.com/product/${id}`);
+        const response = await fetch(`http://localhost:9595/product/${id}`);
         const data = await response.json(); // ✔️ direct json data मिलेगा (product object)
 
         dispatch({ type: "Product", payload: data }); // ✔️ यहां res.data मत लिखो
     } catch (error) {
         console.error("Product error:", error);
     }
-};
+}
 
+export const All_Product = async () => {
+    try {
+        const response = await fetch(`http://localhost:9595/product/${id}`);
+        const data = await response.json()
+
+        dispatch({ type: "Product", payload: data });
+    } catch (error) {
+        console.error("Product error:", error);
+    }
+}
+
+
+export const Product_category = (category) => async (dispatch) => {
+    console.log(category);
+    const response = await fetch(`http://localhost:9595/category/${category}`, {
+        method: "GET",
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    dispatch({ type: "Product_category", payload: data });
+}

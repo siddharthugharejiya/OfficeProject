@@ -1,31 +1,75 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar_1() {
     const [openDropdown, setOpenDropdown] = useState(false);
     const [openMenu, setOpenMenu] = useState(false);
     const [animateMenu, setAnimateMenu] = useState(false);
     const [open, setOpen] = useState(false);
+    const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false); // New state for Product dropdown
     const dropdownRef = useRef(null);
+    const productDropdownRef = useRef(null); // Ref for Product dropdown
+
+    const nav = useNavigate();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setOpenDropdown(false);
             }
+            if (productDropdownRef.current && !productDropdownRef.current.contains(event.target)) {
+                setIsProductDropdownOpen(false);
+            }
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    // Handle Product dropdown hover on desktop
+    useEffect(() => {
+        const handleMouseEnter = () => {
+            if (window.innerWidth >= 768) { // md breakpoint
+                setIsProductDropdownOpen(true);
+            }
+        };
+        const handleMouseLeave = (event) => {
+            if (window.innerWidth >= 768) {
+                const relatedTarget = event.relatedTarget || document.elementFromPoint(event.clientX, event.clientY);
+                if (!productDropdownRef.current?.contains(relatedTarget)) {
+                    setIsProductDropdownOpen(false);
+                }
+            }
+        };
+
+        const productDropdown = productDropdownRef.current;
+        if (productDropdown) {
+            productDropdown.addEventListener('mouseenter', handleMouseEnter);
+            productDropdown.addEventListener('mouseleave', handleMouseLeave);
+        }
+
+        return () => {
+            if (productDropdown) {
+                productDropdown.removeEventListener('mouseenter', handleMouseEnter);
+                productDropdown.removeEventListener('mouseleave', handleMouseLeave);
+            }
+        };
+    }, []);
+
     const handleOpenMenu = () => {
         setOpenMenu(true);
-        setTimeout(() => setAnimateMenu(true), 10); // wait for mounting
+        setTimeout(() => setAnimateMenu(true), 10);
     };
 
     const handleCloseMenu = () => {
-        setAnimateMenu(false); // slide out
-        setTimeout(() => setOpenMenu(false), 300); // wait for transition to complete
+        setAnimateMenu(false);
+        setIsProductDropdownOpen(false); // Close Product dropdown when closing menu
+        setTimeout(() => setOpenMenu(false), 300);
+    };
+
+    const handleCategory = (category) => {
+        nav(`/category/${category}`);
+        setIsProductDropdownOpen(false);
+        setOpenMenu(false);
     };
 
     return (
@@ -45,7 +89,7 @@ function Navbar_1() {
                 {/* Center: Logo */}
                 <div className="flex justify-center">
                     <img
-                        src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/img/logo-1641277924.jpg"
+                        src="../image/Logo CLR.png"
                         alt="logo"
                         className="w-[120px]"
                     />
@@ -90,9 +134,48 @@ function Navbar_1() {
             {/* 🔹 Navigation Menu - Desktop */}
             <nav className="hidden md:flex space-x-8 justify-center items-center text-[17px] font-medium py-2">
                 <Link to="/" className="hover:text-[#b86c59] transition">Home</Link>
-                <Link to="/shop" className="hover:text-[#b86c59] transition">Shop</Link>
-                <Link to="/product" className="hover:text-[#b86c59] transition">Product</Link>
-                <Link to="/blogs" className="hover:text-[#b86c59] transition">Blogs</Link>
+                <Link to="/whoWeAre" className="hover:text-[#b86c59] transition">Who We Are</Link>
+                <div className="relative" ref={productDropdownRef}>
+                    <Link
+                        // to="/product"
+                        onClick={() => {
+                            if (window.innerWidth < 768) {
+                                setIsProductDropdownOpen(!isProductDropdownOpen);
+                            }
+                        }}
+                        className="hover:text-[#b86c59] transition"
+                    >
+                        Product
+                    </Link>
+                    <div className={`absolute left-0 top-full mt-2 z-50 w-[90vw] max-w-[300px] sm:w-[80vw] sm:max-w-[380px] md:w-[60vw] md:max-w-[420px] lg:w-[30rem] lg:max-w-[450px] bg-white shadow-lg rounded-md max-h-[250px] overflow-y-auto ${isProductDropdownOpen ? 'block' : 'hidden'}`}>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-3">
+                            {[
+                                "One Piece Closet",
+                                "Wall Hung Closet",
+                                "Water Closet",
+                                "Table Top Basin",
+                                "One Piece Basin",
+                                "Counter Basin",
+                                "Basin With Pedestal",
+                                "Basin With Half Pedestal",
+                                "Wall Hung Basin",
+                                "Urinal",
+                                "Pan",
+                                "Pastel Series",
+                            ].map((category) => (
+                                <li key={category}>
+                                    <button
+                                        onClick={() => handleCategory(category)}
+                                        className="w-full text-left px-3 py-2 text-sm text-gray-700 rounded hover:bg-gray-100 hover:text-[#b86c59] transition"
+                                    >
+                                        {category}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+                <Link to="/new" className="hover:text-[#b86c59] transition">New Arrivals</Link>
                 <Link to="/contact" className="hover:text-[#b86c59] transition">Contact</Link>
             </nav>
 
@@ -120,7 +203,41 @@ function Navbar_1() {
                         {/* Menu Items */}
                         <Link to="/" className="text-left py-2 hover:text-[#b86c59] transition">Home</Link>
                         <Link to="/shop" className="text-left py-2 hover:text-[#b86c59] transition">Shop</Link>
-                        <Link to="/product" className="text-left py-2 hover:text-[#b86c59] transition">Product</Link>
+                        <div className="relative">
+                            <button
+                                onClick={() => setIsProductDropdownOpen(!isProductDropdownOpen)}
+                                className="text-left py-2 hover:text-[#b86c59] transition w-full"
+                            >
+                                Product
+                            </button>
+                            {isProductDropdownOpen && (
+                                <ul className="mt-2 pl-4 space-y-2">
+                                    {[
+                                        "One Piece Closet",
+                                        "Wall Hung Closet",
+                                        "Water Closet",
+                                        "Table Top Basin",
+                                        "One Piece Basin",
+                                        "Counter Basin",
+                                        "Basin With Pedestal",
+                                        "Basin With Half Pedestal",
+                                        "Wall Hung Basin",
+                                        "Urinal",
+                                        "Pan",
+                                        "Pastel Series",
+                                    ].map((category) => (
+                                        <li key={category}>
+                                            <button
+                                                onClick={() => handleCategory(category)}
+                                                className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:text-[#b86c59] transition"
+                                            >
+                                                {category}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
                         <Link to="/blogs" className="text-left py-2 hover:text-[#b86c59] transition">Blogs</Link>
                         <Link to="/contact" className="text-left py-2 hover:text-[#b86c59] transition">Contact</Link>
 

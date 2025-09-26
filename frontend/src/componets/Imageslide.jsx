@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Nav from "./Nav";
+// import Nav from "./Nav";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import { motion } from "framer-motion";
+import { Nav } from "./Nav";
 
 const slidess = [
     {
@@ -39,7 +40,7 @@ const AnimatedImageSlider = () => {
             >
                 {slidess.map((slide, index) => (
                     <SwiperSlide key={slide.id}>
-                        <div className="relative w-full h-[48vh] xs:h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-screen 2xl:h-screen flex items-center justify-center">
+                        <div className="relative w-full h-[50vh] xs:h-[60vh] sm:h-[80vh] md:h-[80vh] lg:h-[110vh] xl:h-screen 2xl:h-screen flex items-center justify-center">
                             {/* Background Image */}
                             <div
                                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -85,7 +86,7 @@ const AnimatedImageSlider = () => {
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ delay: 0.8, duration: 0.8 }}
-                                            className="bg-gradient-to-r from-[#b86c59] to-[#d4a574] hover:from-[#a55a4a] hover:to-[#c19a6b] text-white font-bold px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 text-xs sm:text-sm md:text-base rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                                            className="bg-gradient-to-r from-[#b86c59] to-[#d4a574] hover:from-[#a55a4a] hover:to-[#c19a6b] text-white font-bold px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 text-[9px] sm:text-[12px] md:text-[13px] rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                                         >
                                             {slide.buttonText}
                                             <i className="fa-solid fa-arrow-right ml-2"></i>

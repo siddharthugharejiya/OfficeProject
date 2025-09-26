@@ -116,7 +116,7 @@ function Home() {
     const firstProductsByCategory = Object.values(
         Product.reduce((acc, product) => {
             if (!acc[product.category]) {
-                acc[product.category] = product; // सिर्फ पहला product रखो
+                acc[product.category] = product;
             }
             return acc;
         }, {})
@@ -193,9 +193,9 @@ function Home() {
                     <div className="w-full max-w-7xl mx-auto ">
                         <Swiper
                             spaceBetween={20}
-                            slidesPerView={4} // Desktop default
+                            slidesPerView={4}
                             breakpoints={{
-                                1536: { slidesPerView: 4 }, // 4 products on XL
+                                1536: { slidesPerView: 4 },
                                 1280: { slidesPerView: 3 },
                                 1024: { slidesPerView: 3 },
                                 768: { slidesPerView: 2 },
@@ -223,7 +223,7 @@ function Home() {
                                                                 className="w-full h-full object-cover"
                                                             />
                                                             {item.tag && (
-                                                                <span className="absolute top-3 left-3 text-xs font-semibold rounded-full z-10">
+                                                                <span className="absolute top-3 -left-5 text-xs font-semibold rounded-full z-10">
                                                                     <div className="bg-[#B0D3FF] text-white h-[20px] px-2 flex items-center justify-center rounded-full">
                                                                         {item.tag}
                                                                     </div>
@@ -242,8 +242,6 @@ function Home() {
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            {/* 🔽 Card Text Section */}
 
                                             <div className="card-body h-[150px] p-3 sm:p-4 text-center w-full flex flex-col justify-start">
                                                 {/* Title */}

@@ -19,7 +19,7 @@ function Footer1() {
                     <div className="max-w-[1300px] mx-auto grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
                         {/* Contact Info */}
                         <div data-aos="fade-right">
-                            <h1 className='uppercase text-[#000000c2] font-bold mb-4'><img src="https://demo74leotheme.b-cdn.net/prestashop/leo_shopiodecor_demo/img/logo-1641277924.jpg" className='h-[30px]' alt="" /></h1>
+                            <h1 className='uppercase text-[#000000c2] font-bold mb-4'><img src="../image/Logo CLR.png" className='h-[30px]' alt="" /></h1>
                             <div className='flex items-center gap-3'>
 
                                 <span className='text-[#BF624C] text-3xl'>0123-456-789</span>

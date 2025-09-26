@@ -101,3 +101,19 @@ export const Product_Page_reducer = (state = initialState3, { type, payload }) =
     }
 
 }
+
+const initialState111 = {
+    category: [],
+};
+
+export const Product_category_reducer = (state = initialState111, action) => {
+    switch (action.type) {
+        case "Product_category":
+            return {
+                ...state,
+                category: action.payload, // ✅ सिर्फ data ही store करो
+            };
+        default:
+            return state;
+    }
+};

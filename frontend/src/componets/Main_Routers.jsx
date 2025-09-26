@@ -5,6 +5,7 @@ import AdminPanel from './AdminPanel'
 import SinglePage from './SinglePage'
 import ProductPage from './ProductPage'
 import Contect from './Contect'
+import Category from './Category'
 
 function Main_Routers() {
     return (
@@ -14,6 +15,7 @@ function Main_Routers() {
             <Route path='/SinglePage/:id' element={<SinglePage />} />
             <Route path='/Product/:id' element={<ProductPage />} />
             <Route path='/contact' element={<Contect />} />
+            <Route path='/category/:category' element={<Category />} />
         </Routes>
     )
 }

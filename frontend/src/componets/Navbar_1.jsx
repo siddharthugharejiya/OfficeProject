@@ -132,7 +132,7 @@ function Navbar_1() {
             </div>
 
             {/* 🔹 Navigation Menu - Desktop */}
-            <nav className="hidden md:flex space-x-8 justify-center items-center text-[17px] font-medium py-2">
+            <nav className="hidden md:flex space-x-8 overflow-visible justify-center items-center text-[17px] font-medium py-2">
                 <Link to="/" className="hover:text-[#b86c59] transition">Home</Link>
                 <Link to="/whoWeAre" className="hover:text-[#b86c59] transition">Who We Are</Link>
                 <div className="relative" ref={productDropdownRef}>
@@ -147,7 +147,7 @@ function Navbar_1() {
                     >
                         Product
                     </Link>
-                    <div className={`absolute left-0 top-full mt-2 z-50 w-[90vw] max-w-[300px] sm:w-[80vw] sm:max-w-[380px] md:w-[60vw] md:max-w-[420px] lg:w-[30rem] lg:max-w-[450px] bg-white shadow-lg rounded-md max-h-[250px] overflow-y-auto ${isProductDropdownOpen ? 'block' : 'hidden'}`}>
+                    <div className={`absolute left-0 top-[50%] mt-2 z-50 w-[90vw] max-w-[300px] sm:w-[80vw] sm:max-w-[380px] md:w-[60vw] md:max-w-[420px] lg:w-[30rem] lg:max-w-[450px] bg-white shadow-lg rounded-md max-h-[60vh] lg:max-h-[50vh] overflow-y-auto ${isProductDropdownOpen ? 'block' : 'hidden'}`}>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-3">
                             {[
                                 "One Piece Closet",
@@ -187,7 +187,7 @@ function Navbar_1() {
                 >
                     <div
                         className={`fixed left-0 top-0 w-[260px] h-full bg-white shadow-lg p-6 flex flex-col
-                        transform transition-transform duration-300 ease-in-out
+                        transform transition-transform duration-300 overflow-auto ease-in-out
                         ${animateMenu ? 'translate-x-0' : '-translate-x-full'}
                     `}
                         onClick={(e) => e.stopPropagation()}

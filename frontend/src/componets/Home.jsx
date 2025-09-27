@@ -2,7 +2,7 @@
 import AnimatedImageSlider from './Imageslide'
 import Footer from './Footer'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { Product_del, Product_Get } from '../Redux/action'
 import { useNavigate } from 'react-router-dom'
 import Slider from "react-slick";
@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { FaShoppingCart, FaEye, FaHeart, FaShareAlt } from "react-icons/fa";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../App.css"
@@ -23,7 +24,6 @@ function Home() {
 
     const handleclick = (e) => {
         console.log(e);
-
         nav(`/Product/${e}`)
 
     }
@@ -74,10 +74,37 @@ function Home() {
         };
     }, [Product]);
 
+    const [open, setOpen] = useState(false);
+    const [eye, setEye] = useState(null);
+    const [quantity, setQuantity] = useState({});
+
+    // open modal
+    const handleViewClick = (product) => {
+        setEye(product);
+        setOpen(true);
+    };
+
+    // close modal
+    const handleClose = () => setOpen(false);
+
+    // quantity handlers
+    const handlePlus = (id) => {
+        setQuantity((prev) => ({
+            ...prev,
+            [id]: (prev[id] || 0) + 1,
+        }));
+    };
+
+    const handleMinus = (id) => {
+        setQuantity((prev) => ({
+            ...prev,
+            [id]: Math.max((prev[id] || 1) - 1, 0),
+        }));
+    };
 
 
     const isLoading = useSelector(state => state.Product.loading || false)
-    console.log("Product:", Product);
+    // console.log("Product:", Product);
     const settings111 = {
         dots: true,
         infinite: true,
@@ -102,15 +129,6 @@ function Home() {
             }
         ]
     };
-
-    const settingss = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 3
-    };
-
 
 
     const firstProductsByCategory = Object.values(
@@ -208,82 +226,104 @@ function Home() {
                             {Product.map((item, index) => (
                                 <SwiperSlide key={item.id}>
                                     <div key={index} className="flex justify-center items-stretch h-full">
-                                        <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem] flex group flex-col items-center transition-transform duration-300 cursor-pointer m-1 origin-center z-0">
+                                        <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem]  flex flex-col items-center hover:shadow-sm transition-transform duration-300 cursor-pointer m-1 z-0" >
+                                            <div className="h-[350px] relative overflow-hidden w-full group">
+                                                <img src={item.Image[0]} alt="" className="h-full w-full object-cover " />
 
-                                            {/* 🔄 Image Flip Section */}
-                                            <div className="flex items-center justify-center w-full">
-                                                <div className="relative w-full aspect-square max-w-[285px] max-h-[285px] mx-auto [perspective:1000px]">
-                                                    <div className="w-full h-full relative transition-transform duration-700 [transform-style:preserve-3d] group-hover:md:[transform:rotateY(180deg)]">
+                                                {/* Hover icons */}
+                                                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 hidden group-hover:flex gap-3 z-10">
+                                                    {/* Cart Icon */}
+                                                    <div className="bg-white p-2 shadow-md flex justify-center items-center hover:scale-110 transition-all duration-200 ">
+                                                        <FaShoppingCart className="text-[18px]" />
+                                                    </div>
 
-                                                        {/* Front Image */}
-                                                        <div className="absolute inset-0 [backface-visibility:hidden]">
-                                                            <img
-                                                                src={item.Image[0] || "/placeholder.png"}
-                                                                alt={item.name}
-                                                                className="w-full h-full object-cover"
-                                                            />
-                                                            {item.tag && (
-                                                                <span className="absolute top-3 -left-5 text-xs font-semibold rounded-full z-10">
-                                                                    <div className="bg-[#B0D3FF] text-white h-[20px] px-2 flex items-center justify-center rounded-full">
-                                                                        {item.tag}
-                                                                    </div>
-                                                                </span>
-                                                            )}
-                                                        </div>
+                                                    {/* View Icon */}
+                                                    {/* View Icon */}
+                                                    <div
+                                                        className="bg-white p-2 shadow-md flex justify-center items-center hover:scale-110 transition-all duration-200"
+                                                        onClick={() => handleViewClick(item)} // ✅ ये लाइन जरूरी है
+                                                    >
+                                                        <FaEye className="text-[18px]" />
+                                                    </div>
 
-                                                        {/* Back Image */}
-                                                        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                                                            <img
-                                                                src={item.Image[1] || "/placeholder.png"}
-                                                                alt={item.name}
-                                                                className="w-full h-full object-cover"
-                                                            />
-                                                        </div>
+
+                                                    {/* Wishlist Icon */}
+                                                    <div className="bg-white p-2 shadow-md flex justify-center items-center hover:scale-110 transition-all duration-200 ">
+                                                        <FaHeart className="text-[18px]" />
+                                                    </div>
+
+                                                    {/* Share Icon */}
+                                                    <div className="bg-white p-2 shadow-md flex justify-center items-center hover:scale-110 transition-all duration-200 ">
+                                                        <FaShareAlt className="text-[18px]" />
                                                     </div>
                                                 </div>
+
                                             </div>
+                                            <div className="card-body mt-4" onClick={() => handleclick(item._id)}>
+                                                <h2 className="card-title text-lg font-mono uppercase text-[14px] text-center text-[#CE701F]">{item.name}</h2>
+                                                <p className="card-title text-lg font-mono uppercase text-[14px] text-center hover:text-[#CE701F] ">{item.des}</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                            <div className="card-body h-[150px] p-3 sm:p-4 text-center w-full flex flex-col justify-start">
-                                                {/* Title */}
-                                                <h5 className="text-[17px] sm:text-base lg:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2">
-                                                    {item.name}
-                                                </h5>
 
-                                                {/* Description */}
-                                                <div className="text-gray-600">
-                                                    <p className="text-[15px] sm:text-sm lg:text-base text-gray-600  break-words ">
-                                                        {item.des}
-                                                    </p>
+                                </SwiperSlide>
+                            ))}
 
-                                                    {/* View More Buttons */}
-                                                    <div
-                                                        className="block md:hidden text-[15px] sm:text-[17px] text-[#BD9C85] font-medium cursor-pointer mt-2"
-                                                        onClick={() => handleclick(item._id)}
-                                                    >
-                                                        View More <i className="fa-solid fa-arrow-right ml-1"></i>
-                                                    </div>
-                                                    <div
-                                                        className="hidden md:group-hover:block text-sm sm:text-base text-[#BD9C85] font-medium cursor-pointer mt-2"
-                                                        onClick={() => handleclick(item._id)}
-                                                    >
-                                                        View More <i className="fa-solid fa-arrow-right ml-1"></i>
-                                                    </div>
-                                                </div>
+                        </Swiper>
+                        {open && eye && (
+                            <>
+                                {/* Overlay */}
+                                <div className="fixed inset-0 bg-black opacity-40 z-50"></div>
+
+                                {/* Modal Box */}
+                                <div className="transition-all duration-700 fixed top-0 left-0 h-screen w-full z-50 flex justify-center items-center overflow-auto p-4 animate-fade-in">
+                                    <div className="grid sm:grid-cols-2 grid-cols-1 bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[98vh] overflow-y-auto relative">
+
+                                        {/* Close Button */}
+                                        <div className="absolute sm:right-5 right-5 top-0 p-4 z-50">
+                                            <button className="text-[20px] hover:animate-ping" onClick={handleClose}>×</button>
+                                        </div>
+
+                                        {/* Image Side */}
+                                        <div className="h-full w-full flex justify-center items-center bg-gray-50 p-6">
+                                            <div className="relative h-[450px] w-[420px] sm:h-[78vh]  md:w-[100%] sm:w-[70%] max-w-[560px] overflow-hidden group">
+                                                <img
+                                                    src={eye.Image[0]}
+                                                    alt={eye.name}
+                                                    className="absolute z-10 h-full w-full object-cover transform transition-all duration-700 group-hover:-translate-x-full"
+                                                />
+                                                <img
+                                                    src={eye.Image[1]}
+                                                    alt={`${eye.name} back`}
+                                                    className="absolute z-0 h-full w-full object-cover transform translate-x-full scale-100 transition-all duration-700 group-hover:translate-x-0 group-hover:scale-110"
+                                                />
+                                                <div className="absolute z-20 top-0 left-[-75%] w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-12 transition-all duration-700 group-hover:left-[100%] pointer-events-none" />
+                                            </div>
+                                        </div>
+
+                                        {/* Info Side */}
+                                        <div className="p-6 flex flex-col justify-between max-h-[95vh] overflow-y-auto">
+                                            <div>
+                                                <h1 className="text-xl font-medium uppercase text-[#CE701F] mb-2">{eye.name}</h1>
+                                                <h2 className="text-base text-gray-500 mb-3">{eye.category}</h2>
+                                                <p className="text-gray-600 text-sm mb-4">
+                                                    {eye.des}
+                                                </p>
+                                            <div><button className='bg-[#CE701F] p-1 text-white rounded-sm' onClick={() => handleclick(eye._id)}>view more</button></div>
                                             </div>
 
                                         </div>
                                     </div>
-                                </SwiperSlide>
+                                </div>
+                            </>
+                        )}
 
 
-                            ))}
-                        </Swiper>
+
+
                     </div>
                 </div>
-
-
-
-
             </div>
 
             <div className='sm:py-10 py-1'>

@@ -17,7 +17,7 @@ export function Nav() {
     const dispatch = useDispatch();
     const nav = useNavigate();
     const categories = useSelector(state => state.category?.category);
-    console.log(categories);
+    // console.log(categories);
 
     const handleToggle = () => {
         setIsOpen((prev) => !prev);
@@ -116,7 +116,7 @@ export function Nav() {
                         </div>
                     </div>
 
-                    <div className="hidden lg:flex items-center justify-between pt-5 flex-wrap">
+                    <div className="hidden lg:flex items-center justify-between pt-5 lg:px-30 flex-wrap">
                         <div className="flex items-center flex-wrap">
                             <div className='w-full flex justify-center items-center'>
                                 <img
@@ -169,7 +169,7 @@ export function Nav() {
                                     ></span>
                                 </button>
 
-                                <div className={`absolute left-0 top-[90%] mt-2 z-50 w-[90vw] max-w-[300px] sm:w-[80vw] sm:max-w-[380px] md:w-[60vw] md:max-w-[420px] lg:w-[30rem] lg:max-w-[450px] bg-white shadow-lg rounded-md max-h-[250px] overflow-y-auto ${isProductDropdownOpen ? 'block' : 'hidden'}`}>
+                                <div className={`absolute left-0 top-[90%] mt-2 z-50 w-[90vw] max-w-[300px] sm:w-[80vw] sm:max-w-[380px] md:w-[60vw] md:max-w-[420px] lg:w-[30rem] lg:max-w-[450px] bg-white shadow-lg rounded-md max-h-[60vh] lg:max-h-[50vh] overflow-y-auto ${isProductDropdownOpen ? 'block' : 'hidden'}`}>
                                     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-3">
                                         {[
                                             "One Piece Closet",
@@ -251,7 +251,7 @@ export function Nav() {
                 </div>
             </header>
 
-            <div className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 overflow-auto ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex justify-between items-center px-4 py-4 border-b">
                     <h2 className="text-lg font-semibold">Menu</h2>
                     <button onClick={handleToggle} className="text-xl">

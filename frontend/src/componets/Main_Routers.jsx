@@ -6,6 +6,8 @@ import SinglePage from './SinglePage'
 import ProductPage from './ProductPage'
 import Contect from './Contect'
 import Category from './Category'
+import Who_we_are from './Who_we_are'
+import NewArrivals from './NewArrivals'
 
 function Main_Routers() {
     return (
@@ -15,6 +17,8 @@ function Main_Routers() {
             <Route path='/SinglePage/:id' element={<SinglePage />} />
             <Route path='/Product/:id' element={<ProductPage />} />
             <Route path='/contact' element={<Contect />} />
+            <Route path='/whoWeAre' element={<Who_we_are />} />
+            <Route path='/new' element={<NewArrivals />} />
             <Route path='/category/:category' element={<Category />} />
         </Routes>
     )

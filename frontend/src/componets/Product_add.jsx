@@ -98,7 +98,7 @@ const Product_add = () => {
             const formData = new FormData();
             formData.append('image', imgObj.file);
 
-            const response = await fetch('http://localhost:5173/upload', {
+            const response = await fetch('https://officeproject-backend.onrender.com/upload', {
                 method: 'POST',
                 body: formData,
             });

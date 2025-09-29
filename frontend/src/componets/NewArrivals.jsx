@@ -91,7 +91,7 @@ function NewArrivals() {
     // derived data
     const allProducts = productsFromStore.length ? productsFromStore : sampleProducts
     // console.log(allProducts);
-    
+
 
     // appliedQuery should match product name OR category (case-insensitive)
     const filtered = allProducts.filter(p => {
@@ -206,12 +206,15 @@ function NewArrivals() {
                     )}
 
                     {!isLoading && filtered.length > 0 && filtered.map((item) => (
-                        <div key={item._id} className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem]  flex flex-col items-center hover:shadow-sm transition-transform duration-300 cursor-pointer m-1 z-0" >
-                            <div className="h-[350px] relative overflow-hidden w-full group">
-                                {(() => {
-                                    const imgSrc = (item && item.Image && item.Image[0]) || item.Image || 'https://via.placeholder.com/600x600?text=No+Image'
-                                    return <img src={imgSrc} alt={item.name || ''} className="h-full w-full object-cover " />
-                                })()}
+                        <div key={item._id} className="card m-auto w-full max-w-sm flex flex-col items-center hover:shadow-sm transition-transform duration-300 cursor-pointer z-0" >
+                            <div className="relative overflow-hidden group w-full">
+                                {/* responsive heights: mobile 220, sm 260, md 300 */}
+                                <div className="h-[220px] sm:h-[260px] md:h-[300px] w-full">
+                                    {(() => {
+                                        const imgSrc = (item && item.Image && item.Image[0]) || item.Image || 'https://via.placeholder.com/600x600?text=No+Image'
+                                        return <img src={imgSrc} alt={item.name || ''} className="h-full w-full object-cover" />
+                                    })()}
+                                </div>
 
                                 {/* Hover icons */}
                                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 hidden group-hover:flex gap-3 z-10">
@@ -243,16 +246,15 @@ function NewArrivals() {
                                 </div>
 
                             </div>
-                            <div className="card-body mt-4" onClick={() => goToProduct(item._id)}>
-                                <h2 className="card-title text-lg font-mono uppercase text-[14px] text-center text-[#CE701F]">{item.name}</h2>
-                                <h2 className="card-title text-lg font-mono uppercase text-[14px] text-center hover:text-[#CE701F]  ">{item.category}</h2>
-                                <p className="card-title text-lg font-mono uppercase text-[14px] text-center hover:text-[#CE701F] ">{item.des}</p>
+                            <div className="card-body mt-4 px-3 w-full text-center" onClick={() => goToProduct(item._id)}>
+                                <h2 className="card-title font-mono uppercase text-[14px] text-[#CE701F] truncate">{item.name}</h2>
+                                <h2 className="card-title font-mono uppercase text-[13px] text-gray-700 hover:text-[#CE701F] truncate">{item.category}</h2>
+                                <p className="card-title text-[13px] text-gray-600 mt-1 truncate">{item.des}</p>
                             </div>
                         </div>
                     ))}
                 </section>
 
-                {/* Pagination removed per request */}
             </div>
             <Footer1 />
         </>

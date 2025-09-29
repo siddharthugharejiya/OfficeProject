@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Product_category } from "../Redux/action";
 
 function Navbar_1() {
     const [openDropdown, setOpenDropdown] = useState(false);
@@ -68,6 +69,8 @@ function Navbar_1() {
 
     const handleCategory = (category) => {
         nav(`/category/${category}`);
+        dispatch(Product_category(category));
+
         setIsProductDropdownOpen(false);
         setOpenMenu(false);
     };
@@ -182,7 +185,7 @@ function Navbar_1() {
             {/* 🔹 Offcanvas Menu - Mobile Only */}
             {openMenu && (
                 <div
-                    className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50"
+                    className="fixed inset-0 z-50 bg-gray-500 bg-opacity-30"
                     onClick={handleCloseMenu}
                 >
                     <div
@@ -202,7 +205,7 @@ function Navbar_1() {
 
                         {/* Menu Items */}
                         <Link to="/" className="text-left py-2 hover:text-[#b86c59] transition">Home</Link>
-                        <Link to="/shop" className="text-left py-2 hover:text-[#b86c59] transition">Shop</Link>
+                        <Link to="/whoWeAre" className="text-left py-2 hover:text-[#b86c59] transition">Who We Are</Link>
                         <div className="relative">
                             <button
                                 onClick={() => setIsProductDropdownOpen(!isProductDropdownOpen)}
@@ -238,17 +241,17 @@ function Navbar_1() {
                                 </ul>
                             )}
                         </div>
-                        <Link to="/blogs" className="text-left py-2 hover:text-[#b86c59] transition">Blogs</Link>
+                        <Link to="/new" className="text-left py-2 hover:text-[#b86c59] transition">New Arrivals</Link>
                         <Link to="/contact" className="text-left py-2 hover:text-[#b86c59] transition">Contact</Link>
 
-                        <div className="mt-4 border-t pt-4">
-                            <Link to="/login" className="flex items-center space-x-2 py-2">
+                        <div className="">
+                            <Link className="flex items-center space-x-2 py-2">
                                 <i className="fa fa-user"></i>
                                 <span>User</span>
                             </Link>
                             <Link to="/cart" className="flex items-center space-x-2 py-2">
                                 <i className="fa fa-shopping-bag"></i>
-                                <span>Cart (0)</span>
+                                <span>Cart</span>
                             </Link>
                         </div>
                     </div>

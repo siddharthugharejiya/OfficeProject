@@ -261,7 +261,7 @@ function Home() {
                                             </div>
                                             <div className="card-body mt-4" onClick={() => handleclick(item._id)}>
                                                 <h2 className="card-title text-lg font-mono uppercase text-[14px] text-center text-[#CE701F]">{item.name}</h2>
-                                                <p className="card-title text-lg font-mono uppercase text-[14px] text-center hover:text-[#CE701F] ">{item.des}</p>
+                                                <p className="card-title text-gray-500 text-lg font-mono uppercase text-[14px] text-center hover:text-[#CE701F] ">{item.des}</p>
                                             </div>
                                         </div>
                                     </div>

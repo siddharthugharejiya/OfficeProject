@@ -16,7 +16,7 @@ function Product_Page() {
     }, [id, dispatch]);
 
     const products = useSelector(state => state.Product_getting?.Product);
-    console.log(products);
+    // console.log(products);
     const nav = useNavigate()
 
     const productList = products?.data || [];
@@ -76,7 +76,7 @@ function Product_Page() {
                             {/* Product Text */}
                             <div className="p-4 flex-1 flex flex-col justify-between">
                                 <div className='text-center'>
-                                    <h2 className="text-lg font-medium text-[#BF624C] mb-1">{item.name}</h2>
+                                    <h2 className="text-lg font-medium uppercase text-[#BF624C] mb-1">{item.name}</h2>
                                     <p className="text-gray-500 text-sm line-clamp-3 wrap-anywhere">{item.des}</p>
                                 </div>
                             </div>

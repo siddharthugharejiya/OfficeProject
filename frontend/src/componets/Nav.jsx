@@ -153,23 +153,21 @@ export function Nav() {
                                 </Link>
                             </div>
 
-                            <div className="relative" ref={productDropdownRef}>
-                                <button
+                            <div className="relative group text-[17px]" ref={productDropdownRef}>
+                                <Link
+                                    // to="/product"
                                     onClick={() => {
-                                        setActiveIndex(2);
-                                        if (window.innerWidth < 1024) {
+                                        if (window.innerWidth < 768) {
                                             setIsProductDropdownOpen(!isProductDropdownOpen);
                                         }
+                                        setActiveIndex(2);
                                     }}
-                                    className="text-[17px] font-medium text-[#2c2c2c] hover:text-[#b86c59] focus:outline-none relative inline-block"
+                                    className="text-[17px] font-medium text-[#2c2c2c] hover:text-[#b86c59] focus:outline-none relative transition"
                                 >
                                     Product
-                                    <span
-                                        className={`absolute left-1/2 -bottom-1 h-[2px] bg-[#b86c59] transition-all duration-300 ${activeIndex === 2 ? "w-full translate-x-[-50%]" : "w-0 group-hover:w-full group-hover:translate-x-[-50%]"}`}
-                                    ></span>
-                                </button>
-
-                                <div className={`absolute left-0 top-[90%] mt-2 z-50 w-[90vw] max-w-[300px] sm:w-[80vw] sm:max-w-[380px] md:w-[60vw] md:max-w-[420px] lg:w-[30rem] lg:max-w-[450px] bg-white shadow-lg rounded-md max-h-[60vh] lg:max-h-[50vh] overflow-y-auto ${isProductDropdownOpen ? 'block' : 'hidden'}`}>
+                                    <span className={`absolute left-1/2 -bottom-1 h-[2px] bg-[#b86c59] transition-all duration-300 ${activeIndex === 2 ? 'w-full translate-x-[-50%]' : 'w-0 group-hover:w-full group-hover:translate-x-[-50%]'} `}></span>
+                                </Link>
+                                <div className={`absolute left-0 top-[50%] mt-2 z-50 w-[90vw] max-w-[300px] sm:w-[80vw] sm:max-w-[380px] md:w-[60vw] md:max-w-[420px] lg:w-[30rem] lg:max-w-[450px] bg-white shadow-lg rounded-md max-h-[60vh] lg:max-h-[50vh] overflow-y-auto ${isProductDropdownOpen ? 'block' : 'hidden'}`}>
                                     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-3">
                                         {[
                                             "One Piece Closet",
@@ -187,10 +185,8 @@ export function Nav() {
                                         ].map((category) => (
                                             <li key={category}>
                                                 <button
-                                                    onClick={() => {
-                                                        handleCategory(category);
-                                                    }}
-                                                    className="w-full text-left px-3 py-2 text-sm text-gray-700 rounded hover:bg-gray-100 hover:text-gray-900 transition"
+                                                    onClick={() => handleCategory(category)}
+                                                    className="w-full text-left px-3 py-2 text-sm text-gray-700 rounded hover:bg-gray-100 hover:text-[#b86c59] transition"
                                                 >
                                                     {category}
                                                 </button>

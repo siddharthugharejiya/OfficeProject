@@ -229,7 +229,7 @@ function SinglePage() {
 
                       <div className="card-body h-[150px] p-3 sm:p-4 text-center w-full flex flex-col justify-start">
                         {/* Title */}
-                        <h5 className="text-[17px] sm:text-base lg:text-lg font-semibold text-gray-800 group-hover:text-[#BD9C85] mb-2">
+                        <h5 className="text-[17px] sm:text-base lg:text-md font-semibolde uppercase text-[#BF624C] mb-2">
                           {item.name}
                         </h5>
 

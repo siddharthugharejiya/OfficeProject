@@ -73,6 +73,19 @@ export function Nav() {
         setIsOpen(false);
     };
 
+    // Mobile-specific category handler to ensure drawer closes before navigation
+    const handleCategoryMobile = (e) => {
+        try {
+            dispatch(Product_category(e));
+        } catch (err) {
+            console.debug('dispatch error in handleCategoryMobile:', err);
+        }
+        // Close the mobile drawer
+        setIsProductDropdownOpen(false);
+        setIsOpen(false);
+        nav(`/category/${e}`);
+    };
+
     return (
         <>
             <header className="md:py-3 md:px-30 sm:py-2 py-3 lg:px-5 sm:px-30 px-3 relative z-50">
@@ -299,7 +312,7 @@ export function Nav() {
                                     <li key={category}>
                                         <button
                                             onClick={() => {
-                                                handleCategory(category);
+                                                handleCategoryMobile(category);
                                             }}
                                             className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:text-[#b86c59]"
                                         >

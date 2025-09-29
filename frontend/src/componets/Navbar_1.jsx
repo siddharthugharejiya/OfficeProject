@@ -1,22 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Product_category } from "../Redux/action";
+import { useDispatch, useSelector } from 'react-redux';
+import { FaTimes } from 'react-icons/fa';
 
 function Navbar_1() {
-    const [openDropdown, setOpenDropdown] = useState(false);
+    // removed unused openDropdown state from original Nav copy
     const [openMenu, setOpenMenu] = useState(false);
     const [animateMenu, setAnimateMenu] = useState(false);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false); // New state for Product dropdown
     const dropdownRef = useRef(null);
     const productDropdownRef = useRef(null); // Ref for Product dropdown
 
-    const nav = useNavigate();
+    // New mobile offcanvas state & toggle (for the provided design)
+    const [isOpen, setIsOpen] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(null);
+    const handleToggle = () => setIsOpen(prev => !prev);
 
+
+
+    const navi = useNavigate();
+    const dispatch = useDispatch();
+
+    // Click outside to close user dropdown and product dropdown
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setOpenDropdown(false);
+                // close the user menu
+                setOpen(false);
             }
             if (productDropdownRef.current && !productDropdownRef.current.contains(event.target)) {
                 setIsProductDropdownOpen(false);
@@ -25,6 +37,9 @@ function Navbar_1() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    // category list from redux (kept for parity with Nav.jsx even if unused)
+    const categories = useSelector(state => state.category?.category);
 
     // Handle Product dropdown hover on desktop
     useEffect(() => {
@@ -66,14 +81,25 @@ function Navbar_1() {
         setIsProductDropdownOpen(false); // Close Product dropdown when closing menu
         setTimeout(() => setOpenMenu(false), 300);
     };
+    const handleCategoryMobile = (e) => {
+        console.log(e);
 
-    const handleCategory = (category) => {
-        nav(`/category/${category}`);
-        dispatch(Product_category(category));
+        try {
+            dispatch(Product_category(e));
+        } catch (err) {
+            console.debug('dispatch error in handleCategoryMobile:', err);
+        }
 
         setIsProductDropdownOpen(false);
-        setOpenMenu(false);
+        setIsOpen(false);
+        navi(`/category/${e}`);
     };
+
+
+
+
+
+
 
     return (
         <div className="bg-white text-black w-full relative z-50 py-1">
@@ -81,7 +107,7 @@ function Navbar_1() {
             <div className="flex justify-between items-center px-4 sm:px-6 py-4 lg:px-30">
                 {/* Mobile Menu Icon */}
                 <div className="md:hidden">
-                    <button onClick={handleOpenMenu}>
+                    <button onClick={() => { handleOpenMenu(); setIsOpen(true); }}>
                         <i className="fa fa-bars text-2xl text-[#333]"></i>
                     </button>
                 </div>
@@ -167,12 +193,22 @@ function Navbar_1() {
                                 "Pastel Series",
                             ].map((category) => (
                                 <li key={category}>
-                                    <button
-                                        onClick={() => handleCategory(category)}
+                                    <Link
+                                        to={`/category/${encodeURIComponent(category)}`}
+                                        onClick={() => {
+                                            try {
+                                                dispatch(Product_category(category));
+                                            } catch (err) {
+                                                console.debug('dispatch error:', err);
+                                            }
+                                            setIsProductDropdownOpen(false);
+                                            setAnimateMenu(false);
+                                            setOpenMenu(false);
+                                        }}
                                         className="w-full text-left px-3 py-2 text-sm text-gray-700 rounded hover:bg-gray-100 hover:text-[#b86c59] transition"
                                     >
                                         {category}
-                                    </button>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -182,80 +218,134 @@ function Navbar_1() {
                 <Link to="/contact" className="hover:text-[#b86c59] transition">Contact</Link>
             </nav>
 
-            {/* 🔹 Offcanvas Menu - Mobile Only */}
-            {openMenu && (
-                <div
-                    className="fixed inset-0 z-50 bg-gray-500 bg-opacity-30"
-                    onClick={handleCloseMenu}
-                >
-                    <div
-                        className={`fixed left-0 top-0 w-[260px] h-full bg-white shadow-lg p-6 flex flex-col
-                        transform transition-transform duration-300 overflow-auto ease-in-out
-                        ${animateMenu ? 'translate-x-0' : '-translate-x-full'}
-                    `}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        {/* Close Button */}
-                        <div className="flex justify-end mb-6">
-                            <i
-                                className="fa fa-times text-2xl cursor-pointer"
-                                onClick={handleCloseMenu}
-                            ></i>
-                        </div>
-
-                        {/* Menu Items */}
-                        <Link to="/" className="text-left py-2 hover:text-[#b86c59] transition">Home</Link>
-                        <Link to="/whoWeAre" className="text-left py-2 hover:text-[#b86c59] transition">Who We Are</Link>
-                        <div className="relative">
-                            <button
-                                onClick={() => setIsProductDropdownOpen(!isProductDropdownOpen)}
-                                className="text-left py-2 hover:text-[#b86c59] transition w-full"
-                            >
-                                Product
-                            </button>
-                            {isProductDropdownOpen && (
-                                <ul className="mt-2 pl-4 space-y-2">
-                                    {[
-                                        "One Piece Closet",
-                                        "Wall Hung Closet",
-                                        "Water Closet",
-                                        "Table Top Basin",
-                                        "One Piece Basin",
-                                        "Counter Basin",
-                                        "Basin With Pedestal",
-                                        "Basin With Half Pedestal",
-                                        "Wall Hung Basin",
-                                        "Urinal",
-                                        "Pan",
-                                        "Pastel Series",
-                                    ].map((category) => (
-                                        <li key={category}>
-                                            <button
-                                                onClick={() => handleCategory(category)}
-                                                className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:text-[#b86c59] transition"
-                                            >
-                                                {category}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-                        <Link to="/new" className="text-left py-2 hover:text-[#b86c59] transition">New Arrivals</Link>
-                        <Link to="/contact" className="text-left py-2 hover:text-[#b86c59] transition">Contact</Link>
-
-                        <div className="">
-                            <Link className="flex items-center space-x-2 py-2">
-                                <i className="fa fa-user"></i>
-                                <span>User</span>
-                            </Link>
-                            <Link to="/cart" className="flex items-center space-x-2 py-2">
-                                <i className="fa fa-shopping-bag"></i>
-                                <span>Cart</span>
-                            </Link>
-                        </div>
-                    </div>
+            {/* 🔹 Offcanvas Menu - Mobile Only (replaced with provided design) */}
+            <div className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 overflow-auto ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <div className="flex justify-between items-center px-4 py-4 border-b">
+                    <h2 className="text-lg font-semibold">Menu</h2>
+                    <button onClick={handleToggle} className="text-xl">
+                        <FaTimes />
+                    </button>
                 </div>
+
+                <nav className="flex flex-col p-4 space-y-3">
+                    <Link
+                        to="/"
+                        onClick={() => { setActiveIndex(0); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Home
+                    </Link>
+                    <Link
+                        to="/whoWeAre"
+                        onClick={() => { setActiveIndex(1); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Who We Are
+                    </Link>
+                    <div className="relative">
+                        <button
+                            onClick={() => {
+                                setActiveIndex(2);
+                                setIsProductDropdownOpen(!isProductDropdownOpen);
+                            }}
+                            className="text-left hover:text-[#b86c59] w-full"
+                        >
+                            Product
+                        </button>
+                        {isProductDropdownOpen && (
+                            <ul className="mt-2 pl-4 space-y-2">
+                                {[
+                                    "One Piece Closet",
+                                    "Wall Hung Closet",
+                                    "Water Closet",
+                                    "Table Top Basin",
+                                    "One Piece Basin",
+                                    "Counter Basin",
+                                    "Basin With Pedestal",
+                                    "Basin With Half Pedestal",
+                                    "Wall Hung Basin",
+                                    "Urinal",
+                                    "Pan",
+                                    "Pastel Series",
+                                ].map((category) => (
+                                    <li key={category}>
+                                        <button
+                                            onClick={() => handleCategoryMobile(category)}
+                                            className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:text-[#b86c59]"
+                                        >
+                                            {category}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                    {/* <div className="relative">
+                        <button
+                            onClick={() => {
+                                setActiveIndex(2);
+                                setIsProductDropdownOpen(!isProductDropdownOpen);
+                            }}
+                            className="text-left hover:text-[#b86c59] w-full"
+                        >
+                            Product
+                        </button>
+                        {isProductDropdownOpen && (
+                            <ul className="mt-2 pl-4 space-y-2">
+                                {[
+                                    "One Piece Closet",
+                                    "Wall Hung Closet",
+                                    "Water Closet",
+                                    "Table Top Basin",
+                                    "One Piece Basin",
+                                    "Counter Basin",
+                                    "Basin With Pedestal",
+                                    "Basin With Half Pedestal",
+                                    "Wall Hung Basin",
+                                    "Urinal",
+                                    "Pan",
+                                    "Pastel Series",
+                                ].map((category) => (
+                                    <li key={category}>
+                                        <Link
+                                            to={`/category/${encodeURIComponent(category)}`}
+                                            onClick={() => {
+                                                try {
+                                                    dispatch(Product_category(category));
+                                                } catch (err) {
+                                                    console.debug('dispatch error:', err);
+                                                }
+                                                setIsProductDropdownOpen(false);
+                                                setIsOpen(false);
+                                            }}
+                                            className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:text-[#b86c59] cursor-pointer "
+                                        >
+                                            {category}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div> */}
+                    <Link
+                        to="/new"
+                        onClick={() => { setActiveIndex(4); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        New Arrivals
+                    </Link>
+                    <Link
+                        to="/contact"
+                        onClick={() => { setActiveIndex(5); setIsOpen(false); }}
+                        className="text-left hover:text-[#b86c59]"
+                    >
+                        Contact
+                    </Link>
+                </nav>
+            </div>
+
+            {isOpen && (
+                <div onClick={handleToggle} className="fixed top-0 left-0 w-full h-full bg-black opacity-30 z-40 sm:hidden"></div>
             )}
         </div>
     );

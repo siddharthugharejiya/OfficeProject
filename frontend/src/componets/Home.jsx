@@ -77,15 +77,54 @@ function Home() {
     const [open, setOpen] = useState(false);
     const [eye, setEye] = useState(null);
     const [quantity, setQuantity] = useState({});
+    // track which card's icons are active on touch devices
+    const [activeCard, setActiveCard] = useState(null);
+
+    const toggleIcons = (id) => {
+        // only run on touch devices — desktop hover shows icons via CSS
+        if (typeof window === 'undefined') return;
+        const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+        if (!isTouch) return;
+        // Always set the tapped card as active. Do NOT toggle off when tapping the same image.
+        setActiveCard(id);
+    }
+
+    // Close active icons when tapping/clicking outside cards
+    useEffect(() => {
+        const handler = (e) => {
+            // if the click/tap is inside any .card element, do nothing (icons remain)
+            if (e.target && e.target.closest && e.target.closest('.card')) return;
+            setActiveCard(null);
+        };
+
+        document.addEventListener('click', handler);
+        document.addEventListener('touchstart', handler);
+        return () => {
+            document.removeEventListener('click', handler);
+            document.removeEventListener('touchstart', handler);
+        };
+    }, []);
 
     // open modal
     const handleViewClick = (product) => {
+        // Open modal for product. Do NOT clear activeCard here so the icon click can run reliably
+        // and icons remain visible until the user explicitly clicks/taps elsewhere.
         setEye(product);
         setOpen(true);
     };
 
     // close modal
     const handleClose = () => setOpen(false);
+
+    // lock body scroll when modal open
+    useEffect(() => {
+        if (open) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [open]);
 
     // quantity handlers
     const handlePlus = (id) => {
@@ -226,22 +265,26 @@ function Home() {
                             {Product.map((item, index) => (
                                 <SwiperSlide key={item.id}>
                                     <div key={index} className="flex justify-center items-stretch h-full">
-                                        <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem]  flex flex-col items-center hover:shadow-sm transition-transform duration-300 cursor-pointer m-1 z-0" >
-                                            <div className="h-[350px] relative overflow-hidden w-full group">
+                                        <div className="card w-full max-w-[18rem] sm:max-w-[20rem] md:max-w-[22rem] lg:max-w-[18rem] xl:max-w-[20rem]  flex flex-col items-center hover:shadow-sm transition-transform duration-300 cursor-pointer overflow-auto m-1 z-0" >
+                                            <div
+                                                className="h-[350px] relative overflow-hidden w-full group"
+                                                onClick={() => toggleIcons(item._id || item.id)}
+                                                onTouchStart={() => toggleIcons(item._id || item.id)}
+                                            >
                                                 <img src={item.Image[0]} alt="" className="h-full w-full object-cover " />
 
-                                                {/* Hover icons */}
-                                                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 hidden group-hover:flex gap-3 z-10">
+                                                {/* Hover icons: visible on desktop hover OR when activeCard === item._id on touch */}
+                                                <div onClick={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()} className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 gap-3 z-10 ${activeCard === (item._id || item.id) ? 'flex' : 'hidden'} group-hover:flex`}>
                                                     {/* Cart Icon */}
                                                     <div className="bg-white p-2 shadow-md flex justify-center items-center hover:scale-110 transition-all duration-200 ">
                                                         <FaShoppingCart className="text-[18px]" />
                                                     </div>
 
                                                     {/* View Icon */}
-                                                    {/* View Icon */}
                                                     <div
                                                         className="bg-white p-2 shadow-md flex justify-center items-center hover:scale-110 transition-all duration-200"
-                                                        onClick={() => handleViewClick(item)} // ✅ ये लाइन जरूरी है
+                                                        onClick={(e) => { e.stopPropagation(); handleViewClick(item); }} // stop propagation so parent toggle doesn't interfere
+                                                        onTouchStart={(e) => { e.stopPropagation(); }}
                                                     >
                                                         <FaEye className="text-[18px]" />
                                                     </div>
@@ -286,7 +329,7 @@ function Home() {
                                         </div>
 
                                         {/* Image Side */}
-                                        <div className="h-full w-full flex justify-center items-center bg-gray-50 p-6">
+                                        <div className="h-full w-full flex overflow-auto justify-center items-center bg-gray-50 p-6">
                                             <div className="relative h-[450px] w-[420px] sm:h-[78vh]  md:w-[100%] sm:w-[70%] max-w-[560px] overflow-hidden group">
                                                 <img
                                                     src={eye.Image[0]}
@@ -310,7 +353,7 @@ function Home() {
                                                 <p className="text-gray-600 text-sm mb-4">
                                                     {eye.des}
                                                 </p>
-                                            <div><button className='bg-[#CE701F] p-1 text-white rounded-sm' onClick={() => handleclick(eye._id)}>view more</button></div>
+                                                <div><button className='bg-[#CE701F] p-1 text-white rounded-sm' onClick={() => handleclick(eye._id)}>view more</button></div>
                                             </div>
 
                                         </div>
